@@ -1,0 +1,75 @@
+[
+    {
+      "id": 1,
+      "name": "Complete Garden Tools (22 Pcs)",
+      "category": "Gardening Tools",
+      "price": 500,
+      "rating": 5,
+      "stockAmount": 50,
+      "saleAmount": 0
+    },
+    {
+      "id": 2,
+      "name": "Fiskars Bypass Pruning Shears",
+      "category": "Gardening Tools",
+      "price": 50,
+      "rating": 4,
+      "stockAmount": 30,
+      "saleAmount": 0
+    },
+    {
+      "id": 3,
+      "name": "Stirrup Hoe",
+      "category": "Gardening Tools",
+      "price": 70,
+      "rating": 3,
+      "stockAmount": 20,
+      "saleAmount": 0
+    },
+    {
+      "id": 4,
+      "name": "Large Repotting Mat",
+      "category": "Gardening Tools",
+      "price": 25,
+      "rating": 4,
+      "stockAmount": 0,
+      "saleAmount": 0
+    },
+    {
+      "id": 5,
+      "name": "Bliss Soil Enhancer",
+      "category": "Soil Enhancers",
+      "price": 120,
+      "rating": 4,
+      "stockAmount": 16,
+      "saleAmount": 0
+    },
+    {
+      "id": 6,
+      "name": "Hydroponic Root Enhancer",
+      "category": "Soil Enhancers",
+      "price": 50,
+      "rating": 4,
+      "stockAmount": 1,
+      "saleAmount": 0
+    },
+    {
+      "id": 7,
+      "name": "CO2 for indoor growing",
+      "category": "Soil Enhancers",
+      "price": 90,
+      "rating": 4,
+      "stockAmount": 2,
+      "saleAmount": 0
+    },
+    {
+      "id": 8,
+      "name": "Holes for Indoor Outdoor Plants",
+      "category": "Gardening Tools",
+      "price": 90,
+      "rating": 4,
+      "stockAmount": 3,
+      "saleAmount": 50
+    }
+  ]
+  
