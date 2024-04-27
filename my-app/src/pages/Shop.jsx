@@ -58,8 +58,6 @@ export default function Shop() {
     console.log(response);
     if (!response) {
       window.location.href = `/login?message=You must log in first.&redirectTo=${pathname}`;
-    } else {
-      return "a7a";
     }
   }
 
