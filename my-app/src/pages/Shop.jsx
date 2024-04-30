@@ -3,15 +3,13 @@ import {
   Link,
   useSearchParams,
   useLoaderData,
-  useLocation,
   defer,
-  Navigate,
   Await,
 } from "react-router-dom";
 import { getProducts } from "../api";
 import FontAwesome from "react-fontawesome";
 import defaultImage from "../images/product-1.jpg";
-import { requireAuth } from "./utils";
+import { isLoggedIn } from "../utils";
 
 export function loader() {
   return defer({ products: getProducts() });
@@ -22,7 +20,6 @@ export default function Shop() {
   const dataPromise = useLoaderData();
   const [displayedProductsCount, setDisplayedProductsCount] = useState(0);
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const location = useLocation();
   const categoryFilter = searchParams.get("category");
   const priceFilter = searchParams.get("price");
   const ratingFilter = searchParams.get("rating");
@@ -54,12 +51,10 @@ export default function Shop() {
   function handleCartClick() {
     const request = new Request(window.location.href);
     const pathname = new URL(request.url).pathname;
-    const response = requireAuth();
+    const response = isLoggedIn();
     console.log(response);
     if (!response) {
       window.location.href = `/login?message=You must log in first.&redirectTo=${pathname}`;
-    } else {
-      return "a7a";
     }
   }
 
@@ -98,7 +93,7 @@ export default function Shop() {
       return (
         <div key={product.id} className="p-2 relative flex flex-col  border rounded-md overflow-hidden bg-white m-2 shadow-xl  transition duration-200 ease-in-out transform hover:shadow-green hover:scale-105">
           <Link
-            to={`product/${product.id}`}
+            to={`${product.id}`}
             state={{
               search: `?${searchParams.toString()}`,
               category: categoryFilter,
@@ -106,7 +101,10 @@ export default function Shop() {
               rating: ratingFilter,
             }}
           >
-            <div className="absolute top-0 left-0 flex flex-col p-2.5 gap-2.5 ">
+            
+
+            <div className="relative">
+            <div className="absolute top-3 left-3  ">
               {product.stockAmount === 0 && (
                 <div className="rounded bg-customGrey text-center text-white px-3 py-2 text-xs font-normal">
                   Out of stock
@@ -118,8 +116,6 @@ export default function Shop() {
                 </div>
               )}
             </div>
-
-            <div className="relative">
               {/* Product image */}
               <img src={imageUrl} alt={product.name} className="h-64" />
               {/* Dark overlay */}
@@ -131,12 +127,24 @@ export default function Shop() {
               </div>
             </div>
             <div className="p-4">
-              <p className=" my-1 text-xs font-normal text-customFontColor">
+              <p className="  text-xs font-normal text-customFontColor">
                 {product.name}
               </p>
-              <h3 className="font-semibold my-1 text-gray-700 text-base">
+              {product.saleAmount ? (
+              <div className="flex gap-2 items-center">
+                <h3 className="text-gray-500 line-through">${product.price}</h3>
+                <h3 className="font-semibold my-1 text-gray-700 text-base">
+                  {product.price * product.saleAmount / 100} EGP
+                </h3>
+              </div>
+            ) : (
+              <>
+                <h3 className="font-semibold my-1 text-gray-700 text-base">
                 {product.price} EGP
-              </h3>
+                </h3>
+              </>
+            )}
+            
                 <div className="flex items-center">
                   {[...Array(product.rating)].map((_, index) => (
                     <FontAwesome

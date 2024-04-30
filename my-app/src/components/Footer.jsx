@@ -34,7 +34,7 @@ export default function Footer() {
                 <h5>Proxy</h5>
                 <ul>
                     <li><Link to="/about">About</Link></li>
-                    <li><Link to="/shop">Shop</Link></li>
+                    <li><Link to="/products">Shop</Link></li>
                     <li><Link to="/track-order">Track Order</Link></li>
                 </ul>
             </div>

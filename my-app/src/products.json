@@ -6,7 +6,8 @@
       "price": 500,
       "rating": 5,
       "stockAmount": 50,
-      "saleAmount": 0
+      "saleAmount": 0,
+      "description":"Our gardening tool set is designed with your comfort in mind. The ergonomic handle design allows for a comfortable grip and reduces hand fatigue, even during long gardening sessions. The soft yet sturdy handle provides a secure grip and helps prevent slipping, so you can work with confidence. Whether you’re planting delicate seedlings or digging up stubborn weeds, our tool set’s comfortable design will help you get the job done with ease."
     },
     {
       "id": 2,
@@ -15,7 +16,8 @@
       "price": 50,
       "rating": 4,
       "stockAmount": 30,
-      "saleAmount": 0
+      "saleAmount": 0,
+      "description":""
     },
     {
       "id": 3,
@@ -24,7 +26,8 @@
       "price": 70,
       "rating": 3,
       "stockAmount": 20,
-      "saleAmount": 0
+      "saleAmount": 0,
+      "description":""
     },
     {
       "id": 4,
@@ -33,7 +36,8 @@
       "price": 25,
       "rating": 4,
       "stockAmount": 0,
-      "saleAmount": 0
+      "saleAmount": 0,
+      "description":""
     },
     {
       "id": 5,
@@ -42,7 +46,8 @@
       "price": 120,
       "rating": 4,
       "stockAmount": 16,
-      "saleAmount": 0
+      "saleAmount": 0,
+      "description":""
     },
     {
       "id": 6,
@@ -51,7 +56,8 @@
       "price": 50,
       "rating": 4,
       "stockAmount": 1,
-      "saleAmount": 0
+      "saleAmount": 0,
+      "description":""
     },
     {
       "id": 7,
@@ -60,7 +66,8 @@
       "price": 90,
       "rating": 4,
       "stockAmount": 2,
-      "saleAmount": 0
+      "saleAmount": 0,
+      "description":""
     },
     {
       "id": 8,

@@ -49,7 +49,7 @@ export default function ArticleDetail() {
   return (
     <div className="article-container">
       <div className="article">
-        <img src={imageUrl} alt="Article" />
+        <img src={imageUrl}  alt="Article" />
         <h3 className="article-name">{colorFirstAndSecondWords(article.title)}</h3>
         <div className="article-author">
           <h3>By {article.author}</h3>

@@ -1,5 +1,9 @@
 import articles from './articles.json';
 import products from './products.json';
+import books from './books.json';
+import faqs from './faqs.json';
+
+
 
 export async function loginUser({ email, password }) {
     // Simulate API call delay
@@ -23,12 +27,28 @@ export async function signupUser({ email, password }) {
     return 'dummyAccessToken'; // Return a dummy access token on successful signup
 }
 
+export async function sendFeedback({name,email,subject,message}) {
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    // if send return ok else not ok
+
+    return 'ok'; 
+}
+
 export function getArticles() {
     return articles;
   }
   export function getProducts() {
     return products;
   }
+
+  export function getBooks() {
+    return books;
+  }
+  export function getFaqs() {
+    return faqs;
+  }
+  
   
 
 export function getLatestArticles() {
@@ -36,21 +56,26 @@ export function getLatestArticles() {
   }
   
 export function getArticle(id) {
-    console.log(id)
     for (let i = 0; i < articles.length; i++) {
         if (articles[i].id === id) {
-            console.log(articles[i])
             return articles[i];
         }
     }
     return null;
 }
 export function getProduct(id) {
-    console.log(id)
     for (let i = 0; i < products.length; i++) {
         if (products[i].id === id) {
-            console.log(products[i])
             return products[i];
+        }
+    }
+    return null;
+}
+
+export function getBook(id) {
+    for (let i = 0; i < books.length; i++) {
+        if (books[i].id === id) {
+            return books[i];
         }
     }
     return null;

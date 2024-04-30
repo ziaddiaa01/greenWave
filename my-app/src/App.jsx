@@ -6,7 +6,12 @@ import Register , {action as signUpAction } from './pages/Register'
 import ArticleDetail , { loader as articleDetailLoader} from './pages/ArticleDetail'
 import Articles , { loader as articleLoader} from './pages/Articles'
 import Shop , { loader as shopLoader} from './pages/Shop'
-import Product , { loader as productLoader} from './pages/Product'
+import ProductDetail , { loader as productDetailLoader} from './pages/ProductDetail'
+import Books , { loader as booksLoader} from './pages/Books'
+import BooksDetail , { loader as booksDetailLoader} from './pages/BooksDetail'
+import Faqs , { loader as faqsLoader} from './pages/Faqs'
+import Contact , {action as contactAction } from './pages/Contact'
+
 
 
 
@@ -44,14 +49,34 @@ const router = createBrowserRouter(createRoutesFromElements(
       loader={articleDetailLoader}
     />
     <Route 
-      path="shop" 
+      path="products" 
       element={<Shop />} 
       loader={shopLoader}
     />
     <Route 
-      path="product/:id" 
-      element={<Product />} 
-      loader={productLoader}
+      path="products/:id" 
+      element={<ProductDetail />} 
+      loader={productDetailLoader}
+    />
+    <Route 
+      path="books" 
+      element={<Books />} 
+      loader={booksLoader}
+    />
+    <Route 
+      path="books/:id" 
+      element={<BooksDetail />} 
+      loader={booksDetailLoader}
+    />
+    <Route 
+      path="faqs" 
+      element={<Faqs />} 
+      loader={faqsLoader}
+    />
+    <Route 
+      path="contact" 
+      element={<Contact />} 
+      action={contactAction}
     />
   </Route>
 ))

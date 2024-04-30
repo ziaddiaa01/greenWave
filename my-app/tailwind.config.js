@@ -13,7 +13,9 @@ export default {
         customRed: '#D9504A',
         customGrey: '#999990',
         customFontColor:'#4D4D4D',
-        customGreen:'#00b207'
+        customGreen:'#00b207',
+        customGreenTwo:'#2DA884',
+        customOrange:'#FF7426'
       },
     },
   },
