@@ -12,6 +12,7 @@ import BooksDetail , { loader as booksDetailLoader} from './pages/BooksDetail'
 import Faqs , { loader as faqsLoader} from './pages/Faqs'
 import Contact , {action as contactAction } from './pages/Contact'
 import Courses , {loader as coursesLoader } from './pages/Courses'
+import CourseDetail , { loader as courseDetailLoader} from './pages/CourseDetail'
 
 
 
@@ -83,6 +84,11 @@ const router = createBrowserRouter(createRoutesFromElements(
       path="courses" 
       element={<Courses />} 
       loader={coursesLoader}
+    />
+    <Route 
+      path="courses/:id" 
+      element={<CourseDetail />} 
+      loader={courseDetailLoader}
     />
   </Route>
 ))

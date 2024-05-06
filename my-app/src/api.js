@@ -78,6 +78,16 @@ export function getProduct(id) {
     return null;
 }
 
+export function getCourse(id) {
+    for (let i = 0; i < courses.length; i++) {
+        if (courses[i].id === id) {
+            return courses[i];
+        }
+    }
+    return null;
+}
+
+
 export function getBook(id) {
     for (let i = 0; i < books.length; i++) {
         if (books[i].id === id) {

@@ -1,155 +1,233 @@
-import  { useState , useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
-import FontAwesome from "react-fontawesome";
-import myImage from "../images/logo.png";
+import myImage from "../images/logo2.png";
+import "flowbite";
 
-const activeStyles = {
-  fontWeight: "bold",
-  color: "#00B207",
-};
-
-export default function Header() {
-  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
-  const [educationDropdownOpen, setEducationDropdownOpen] = useState(false);
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (servicesDropdownOpen && !document.getElementById('services').contains(event.target)) {
-        setServicesDropdownOpen(false);
-      }
-      if (educationDropdownOpen && !document.getElementById('education').contains(event.target)) {
-        setEducationDropdownOpen(false);
-      }
-    };
-
-    // Add the event listener when the component mounts
-    document.addEventListener('mousedown', handleClickOutside);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [servicesDropdownOpen, educationDropdownOpen]); // Re-run the effect when these state variables change
-  const toggleServicesDropdown = () => {
-    setServicesDropdownOpen(!servicesDropdownOpen);
-    setEducationDropdownOpen(false); // Close education dropdown when services dropdown opens
+function Header() {
+  const activeStyles = {
+    fontWeight: "bold",
+    color: "#00B207",
   };
-  const toggleEducationDropdown = () => {
-    setEducationDropdownOpen(!educationDropdownOpen);
-    setServicesDropdownOpen(false); 
-  };
-  const handleDropdownItemClick = (e) => {
-    e.stopPropagation();
-  };
+  
+
   return (
-    <header>
-      <div className="mainHeader">
-        <div className="site-logo">
-          <img src={myImage} alt="Logo" />
-          <h3>GreenWave</h3>
-        </div>
-        <div className="login-register-link">
-          <Link to="/login" className="login-link">
-            Sign In
+    <nav className="bg-white border-gray-200 dark:bg-[#333333] dark:border-gray-700">
+      <nav className="bg-white border-gray-200 dark:bg-[#333333] dark:border-gray-700">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+          <Link
+            to="/"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <img src={myImage} className="h-8" alt="green Wave Logo" />
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+              Green Wave
+            </span>
           </Link>
-          <span>/</span>
-          <Link to="/signup" className="register-link">
-            Sign Up
-          </Link>
+          <button
+            data-collapse-toggle="navbar-dropdown"
+            type="button"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="navbar-dropdown"
+            aria-expanded="false"
+          >
+            <span className="sr-only">Open main menu</span>
+            <svg
+              className="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+          <div
+            className="hidden w-full md:block md:w-auto"
+            id="navbar-dropdown"
+          >
+            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-[#333333] md:dark:bg-[#333333] dark:border-gray-700">
+              <li>
+                <NavLink
+                  end
+                  style={({ isActive }) => (isActive ? activeStyles : null)}
+                  to="/"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 dark:text-white md:dark:hover:text-customGreen dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyles : null)}
+                  to="/products"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 dark:text-white md:dark:hover:text-customGreen dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  Shop
+                </NavLink>
+              </li>
+              <li>
+                <button
+                  id="dropdownNavbarLink"
+                  data-dropdown-toggle="dropdownNavbar"
+                  className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 md:w-auto dark:text-white md:dark:hover:text-customGreen dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+                >
+                  Services{" "}
+                  <svg
+                    className="w-2.5 h-2.5 ms-2.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 10 6"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 1 4 4 4-4"
+                    />
+                  </svg>
+                </button>
+                {/* Dropdown menu */}
+                <div
+                  id="dropdownNavbar"
+                  className="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+                >
+                  <ul
+                    className="py-2 text-sm text-gray-700 text-center dark:text-gray-400"
+                    aria-labelledby="dropdownLargeButton"
+                  >
+                    <li>
+                      <NavLink
+                        style={({ isActive }) =>
+                          isActive ? activeStyles : null
+                        }
+                        to="/waste"
+                        className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 dark:text-white md:dark:hover:text-customGreen dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                      >
+                        Waste Collection
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        style={({ isActive }) =>
+                          isActive ? activeStyles : null
+                        }
+                        to="/greening"
+                        className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 dark:text-white md:dark:hover:text-customGreen dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                      >
+                        Greening Service
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+            <button
+              id="educationDropdownLink"
+              data-dropdown-toggle="educationDropdown"
+              className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 md:w-auto dark:text-white md:dark:hover:text-customGreen dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
+            >
+              Education{" "}
+              <svg
+                className="w-2.5 h-2.5 ms-2.5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            {/* Dropdown menu for Education */}
+            <div
+              id="educationDropdown"
+              className="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+            >
+              <ul
+                className="py-2 text-sm text-gray-700 text-center dark:text-gray-400"
+                aria-labelledby="educationDropdownLink"
+              >
+                <li>
+                  <NavLink
+                    style={({ isActive }) =>
+                      isActive ? activeStyles : null
+                    }
+                    to="/courses"
+                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 dark:text-white md:dark:hover:text-customGreen dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  >
+                    Courses
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    style={({ isActive }) =>
+                      isActive ? activeStyles : null
+                    }
+                    to="/books"
+                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 dark:text-white md:dark:hover:text-customGreen dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  >
+                    Books
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    style={({ isActive }) =>
+                      isActive ? activeStyles : null
+                    }
+                    to="/articles"
+                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 dark:text-white md:dark:hover:text-customGreen dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  >
+                    Articles
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </li>          
+              
+              <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyles : null)}
+                  to="/contact"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 dark:text-white md:dark:hover:text-customGreen dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  Contact
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyles : null)}
+                  to="/about"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-customGreen md:p-0 dark:text-white md:dark:hover:text-customGreen dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  About
+                </NavLink>
+              </li>
+              <Link to="/login">
+              <button type="button" className="text-white bg-green-700 hover:bg-white  hover:text-green-700  font-medium rounded-full text-sm px-5 py-2.5 m-0 text-center mb-2 dark:bg-green-700 dark:hover:bg-white dark:focus:ring-green-700">Sign In</button>
+              </Link>
+              <Link to="/signup">
+              <button type="button" className="text-green-700 bg-white hover:bg-green-700 focus:outline-none hover:text-white   font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-white dark:hover:bg-green-700 dark:focus:ring-green-700">Sign up</button>
+
+              </Link>
+            </ul>
+
+          </div>
         </div>
-      </div>
-      <nav>
-       <FontAwesome className="fas fa-bars menu"></FontAwesome>
-        <NavLink
-          to="/"
-          end
-          style={({ isActive }) => (isActive ? activeStyles : null)}
-          className="nav-item"
-        >
-          Home
-        </NavLink>
-        <NavLink
-          to="/products"
-          style={({ isActive }) => (isActive ? activeStyles : null)}
-          className="nav-item"
-        >
-          Shop
-        </NavLink>
-        <h2 className={`${servicesDropdownOpen ? 'nav-item expanded' : 'nav-item'}`} id="services" onClick={toggleServicesDropdown}>
-          Services
-          {servicesDropdownOpen && (
-            <ul className="drop-menu">
-              <li onClick={handleDropdownItemClick}>
-                <NavLink
-                  to="/Waste"
-                  style={({ isActive }) => (isActive ? activeStyles : null)}
-                  className="drop-item"
-                >
-                  Waste collection service
-                </NavLink>
-              </li>
-              <li onClick={handleDropdownItemClick}>
-                <NavLink
-                  to="/Greening"
-                  style={({ isActive }) => (isActive ? activeStyles : null)}
-                  className="drop-item"
-                >
-                  Greening services
-                </NavLink>
-              </li>
-            </ul>
-          )}
-        </h2>
-        <h2 className={`${educationDropdownOpen ? 'nav-item expanded' : 'nav-item'}`} id="education" onClick={toggleEducationDropdown}>
-          Education
-          {educationDropdownOpen && (
-            <ul className="drop-menu">
-              <li onClick={handleDropdownItemClick}>
-                <NavLink
-                  to="/courses"
-                  style={({ isActive }) => (isActive ? activeStyles : null)}
-                  className="drop-item"
-                >
-                  Courses
-                </NavLink>
-              </li>
-              <li onClick={handleDropdownItemClick}>
-                <NavLink
-                  to="/books"
-                  style={({ isActive }) => (isActive ? activeStyles : null)}
-                  className="drop-item"
-                >
-                  Books
-                </NavLink>
-              </li>
-              <li onClick={handleDropdownItemClick}>
-                <NavLink
-                  to="/articles"
-                  style={({ isActive }) => (isActive ? activeStyles : null)}
-                  className="drop-item"
-                >
-                  Articles
-                </NavLink>
-              </li>
-            </ul>
-          )}
-        </h2>
-        <NavLink
-          to="/contact"
-          activeClassName="active"
-          style={({ isActive }) => (isActive ? activeStyles : null)}
-          className="nav-item"
-        >
-          Contact
-        </NavLink>
-        <NavLink
-          to="/about"
-          activeClassName="active"
-          style={({ isActive }) => (isActive ? activeStyles : null)}
-          className="nav-item"
-        >
-          About
-        </NavLink>
       </nav>
-    </header>
+    </nav>
   );
 }
+
+export default Header;
