@@ -46,7 +46,26 @@ export default function ArticleDetail() {
     );
   };
 
-  return (
+  const extractAndBoldTitles = (content) => {
+    const sentences = String(content).split('.');
+    const titlesAndContent = sentences.map(sentence => {
+      const parts = sentence.split(':');
+      if (parts.length > 1) {
+        const title = parts[0].trim();
+        const content = parts.slice(1).join(':').trim();
+        return (
+          <>
+            <b>{title}</b> <br />
+            {content} <br />
+          </>
+        );
+      }
+      return null;
+    });
+    return titlesAndContent.filter(Boolean);
+  };
+
+   return (
     <div className="article-container">
       <div className="article">
         <img src={imageUrl}  alt="Article" />
@@ -56,15 +75,12 @@ export default function ArticleDetail() {
           <h3>{article.day + article.month}</h3>
         </div>
         <div className="article-content">
-          {[article.content].map((line, index) => {
-            // Check if the line starts with a number followed by a dot
-            const isSectionHeader = /^\d+\./.test(line);
-            return (
-              <p key={index} className={isSectionHeader ? 'section-header' : 'regular-text'}>
-                {line}
-              </p>
-            );
-          })}
+          <p>
+            {extractAndBoldTitles(article.content)}
+          </p>
+          <p>
+            <b>{article.conclusion}</b>
+          </p>
         </div>
         {/* Button to scroll to the top */}
         {scrollY > 100 && (

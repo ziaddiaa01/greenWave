@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Design drip Irrigation system",
+    "rating": 4,
+    "level": "Beginner",
+    "price": 500,
+    "hours": 1.5,
+    "lectures": 23,
+    "sales": 250
+  },
+  {
+    "id": 2,
+    "name": "Guide to Indoor gardening ",
+    "rating": 3,
+    "level": "Beginner",
+    "price": 250,
+    "hours": 1,
+    "lectures": 9,
+    "sales": 240
+  },
+  {
+    "id": 3,
+    "name": "Guide to build soil from scratch",
+    "rating": 4,
+    "level": "Intermediate",
+    "price": 350,
+    "hours": 1.5,
+    "lectures": 26,
+    "sales": 250
+  }
+]

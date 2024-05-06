@@ -16,7 +16,7 @@ function Home() {
       const parts = defaultImage.split("-");
       parts[parts.length - 1] = `${article.id}.jpg`;
       const imageUrl = parts.join("-");
-      
+
       return (
         <div key={article.id} className="card">
           <Link to={`articles/${article.id}`}>
@@ -28,7 +28,10 @@ function Home() {
               </h3>
               <div className="article-details">
                 <h3 className="article-category">
-                  <FontAwesome name="fa-solid fa-list" className="article-icon" />
+                  <FontAwesome
+                    name="fa-solid fa-list"
+                    className="article-icon"
+                  />
                   {article.category}
                 </h3>
                 <h3 className="article-author">
@@ -74,38 +77,52 @@ function Home() {
           <p>Free shipping on all your order.</p>
         </div>
         <div className="main-button">
-          <Link to="/shop">
+          <Link to="/products">
             Shop Now <FontAwesome name="fa-thin fa-arrow-right" />
           </Link>
         </div>
       </section>
       <section className="service-feature">
         <div className="feature">
-          <FontAwesome
-            name="fa-light fa-truck fa-flip-horizontal fa-lg"
-            className="icon"
-          />
+          <i>
+            <FontAwesome
+              name="fa-light fa-truck fa-flip-horizontal fa-lg"
+              className="icon"
+            />
+          </i>
+
           <div className="feature-text">
             <h4>Free Shipping</h4>
             <p>Free shipping on all your order</p>
           </div>
         </div>
         <div className="feature">
-          <FontAwesome name="fa-solid fa-phone fa-lg" className="icon" />
+          <i>
+            <FontAwesome name="fa-solid fa-phone fa-lg" className="icon" />
+          </i>
           <div className="feature-text">
             <h4>Customer Support 24/7</h4>
             <p>Instant Support</p>
           </div>
         </div>
         <div className="feature">
-          <FontAwesome name="fa-solid fa-lock fa-lg" className="icon" />
+          <i>
+            <FontAwesome name="fa-solid fa-lock fa-lg" className="icon" />
+          </i>
+
           <div className="feature-text">
             <h4>100% Secure Payment</h4>
             <p>We ensure your security</p>
           </div>
         </div>
         <div className="feature">
-          <FontAwesome name="fa-solid fa-credit-card fa-lg" className="icon" />
+          <i>
+            <FontAwesome
+              name="fa-solid fa-credit-card fa-lg"
+              className="icon"
+            />
+          </i>
+
           <div className="feature-text">
             <h4>Money-Back</h4>
             <p>30 Days Money-Back</p>

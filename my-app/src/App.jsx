@@ -11,6 +11,7 @@ import Books , { loader as booksLoader} from './pages/Books'
 import BooksDetail , { loader as booksDetailLoader} from './pages/BooksDetail'
 import Faqs , { loader as faqsLoader} from './pages/Faqs'
 import Contact , {action as contactAction } from './pages/Contact'
+import Courses , {loader as coursesLoader } from './pages/Courses'
 
 
 
@@ -77,6 +78,11 @@ const router = createBrowserRouter(createRoutesFromElements(
       path="contact" 
       element={<Contact />} 
       action={contactAction}
+    />
+    <Route 
+      path="courses" 
+      element={<Courses />} 
+      loader={coursesLoader}
     />
   </Route>
 ))

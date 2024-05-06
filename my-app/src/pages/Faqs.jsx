@@ -23,7 +23,7 @@ function FAQ() {
   // Function to render FAQ items
   function renderFAQs(faqs) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto w-3/4 px-4 py-8">
         <h3 className="text-3xl font-semibold mb-8 text-center">Frequently Asked <span className='text-customGreenTwo'>Questions</span></h3>
         <div className="accordion grid gap-4 justify-center">
           {faqs.map((faq) => (

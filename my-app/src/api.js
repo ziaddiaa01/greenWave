@@ -2,6 +2,8 @@ import articles from './articles.json';
 import products from './products.json';
 import books from './books.json';
 import faqs from './faqs.json';
+import courses from './courses.json';
+
 
 
 
@@ -40,6 +42,10 @@ export function getArticles() {
   }
   export function getProducts() {
     return products;
+  }
+
+  export function getCourses() {
+    return courses;
   }
 
   export function getBooks() {

@@ -58,6 +58,7 @@ export default function Header() {
         </div>
       </div>
       <nav>
+       <FontAwesome className="fas fa-bars menu"></FontAwesome>
         <NavLink
           to="/"
           end
