@@ -27,7 +27,7 @@ export default function Footer() {
                 <ul>
                     <li><Link to="/contact">Contact</Link></li>
                     <li><Link to="/faqs">Faqs</Link></li>
-                    <li><Link to="/terms-condition">Terms & Condition</Link></li>
+                    <li><Link to="/terms">Terms & Condition</Link></li>
                 </ul>
             </div>
             <div  className="right-side">

@@ -2,13 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-* {
+*  {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins";
+  caret-color: transparent;
 }
-
+input,textarea{
+  caret-color: black;
+}
 /* start header native css */
 .login-register-link > a {
   text-decoration: none;

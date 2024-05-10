@@ -56,7 +56,7 @@ function Books() {
               </Link>
               {book.price === 0 ? (
                     <div className="bg-customOrange rounded-3xl w-full text-sm  text-center hover:scale-105 text-white  py-2  duration-300 ease-in-out">
-                         <Link to={`download link`} >
+                         <Link to={book.download_link} >
                             Download
                         </Link>
                     </div>
