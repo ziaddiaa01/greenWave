@@ -3,7 +3,7 @@ import products from './products.json';
 import books from './books.json';
 import faqs from './faqs.json';
 import courses from './courses.json';
-
+import appointemts from './collection_appointments.json';
 
 
 
@@ -37,6 +37,12 @@ export async function sendFeedback({name,email,subject,message}) {
     return 'ok'; 
 }
 
+export async function setCollectionAppointment({ type, weight, location, photo, appointment}) {
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    return 'dummy'; // Return a dummy access token on successful signup
+}
+
 export function getArticles() {
     return articles;
   }
@@ -59,6 +65,10 @@ export function getArticles() {
 
 export function getLatestArticles() {
     return articles.filter(article => article.latest === true);
+  }
+
+  export function getAvailableAppointments() {
+    return appointemts.filter(appointemt => appointemt.is_free === true);
   }
   
 export function getArticle(id) {

@@ -15,10 +15,7 @@ import Courses , {loader as coursesLoader } from './pages/Courses'
 import CourseDetail , { loader as courseDetailLoader} from './pages/CourseDetail'
 import Terms from './pages/Terms'
 import About from './pages/About'
-
-
-
-
+import Waste, { loader as collectionLoader, action as collectionAction }from './pages/Waste'
 import {
   RouterProvider,
   createBrowserRouter,
@@ -99,6 +96,12 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route 
       path="about" 
       element={<About />} 
+    />
+    <Route 
+      path="waste" 
+      element={<Waste />}
+      loader={collectionLoader}
+      action={collectionAction}
     />
   </Route>
 ))

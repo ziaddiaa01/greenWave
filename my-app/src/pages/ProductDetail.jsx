@@ -83,7 +83,7 @@ export default function ProductDetail() {
             >
               -
             </button>
-            <span className="bg-gray-200 py-1 px-3">{quantity}</span>
+            <span className="bg-gray-200 py-1 px-3">{quantity-1}</span>
             <button
               onClick={() => setQuantity(quantity + 1)}
               className="bg-gray-200 text-gray-700 font-bold py-1 px-2 rounded-r hover:bg-gray-300"

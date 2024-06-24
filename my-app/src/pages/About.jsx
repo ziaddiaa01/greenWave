@@ -1,11 +1,13 @@
 import React from "react";
 import FontAwesome from "react-fontawesome";
+import image1 from '../images/about-1.jpg'
+import image2 from '../images/about-2.jpg'
 
 function About() {
   return (
     <div className="flex flex-col gap-[10px] mx-auto w-[80%] items-center">
       <section className="bg-[#FFFFFF] w-full  rounded-lg mt-8 ">
-        <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto py-4 ">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
             <div className=" line-height: 1.625; max-w-lg">
               <h2 className="text-[50px] text-[#1A906B] font-extrabold ">
@@ -27,7 +29,7 @@ function About() {
             </div>
             <div className="mt-12 md:mt-0">
               <img
-                src="https://images.unsplash.com/photo-1531973576160-7125cd663d86"
+                src={image1}
                 alt="About Us Image"
                 className="object-cover rounded-lg shadow-md"
               ></img>
@@ -37,17 +39,17 @@ function About() {
       </section>
 
       
-      <div className="p-8 text-left w-full">
-        <h1 className="text-5xl  leading-relaxed font-bold text-[#232A42] mt-6">
+      <div className="py-8 text-left w-full">
+        <h1 className="text-[50px]  leading-relaxed font-bold text-[#232A42] mt-6">
           Caring For Your{" "}
-          <span className="text-customGreen">Private Plants </span>, Our
+          <span className="text-[#1A906B]">Private Plants </span>, Our
           Expertise
         </h1>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 text-center w-full mx-auto gap-7 ">
       <div className="p-8 bg-[#ffffff] shadow-lg rounded-xl">
-          <div className="bg-green-100  mx-auto rounded-full w-16 h-16 flex justify-center items-center text-green-500 shadow-2xl">
+          <div className="bg-green-100  mx-auto rounded-full w-16 h-16 flex justify-center items-center text-[#1A906B] shadow-2xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -59,7 +61,7 @@ function About() {
               <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
             </svg>
           </div>
-          <h2 className=" mt-6 tracking-wider text-customGreen font-bold mb-3">
+          <h2 className=" mt-6 tracking-wider text-[#1A906B] font-bold mb-3">
             <span className="text-[#232A42]">Our</span> Vision
           </h2>
           <p className="font-light text-sm  text-gray-500 mb-3">
@@ -70,7 +72,7 @@ function About() {
         </div>
 
         <div className="p-8 bg-[#ffffff] shadow-lg rounded-xl">
-          <div className="bg-green-100  mx-auto rounded-full w-16 h-16 flex justify-center items-center text-green-500 shadow-2xl">
+          <div className="bg-green-100  mx-auto rounded-full w-16 h-16 flex justify-center items-center text-[#1A906B] shadow-2xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-8 w-8"
@@ -81,11 +83,11 @@ function About() {
                 fillRule="evenodd"
                 d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
                 clipRule="evenodd"
-                className="text-customGreen"
+                className="text-[#1A906B]"
               />
             </svg>
           </div>
-          <h2 className=" mt-6 tracking-wider text-customGreen font-bold mb-3">
+          <h2 className=" mt-6 tracking-wider text-[#1A906B] font-bold mb-3">
             <span className="text-[#232A42]">Our</span> Mission
           </h2>
           <p className="font-light text-sm leading-relaxed text-gray-500 mb-3">
@@ -98,12 +100,19 @@ function About() {
         </div>
       </div>
       <section className="bg-[#ffffff] w-full rounded-lg  mb-5">
-        <div className="container w-full  py-16  sm:px-6 lg:px-8">
+        <div className="container w-full  py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+          <div className="mt-12 md:mt-0">
+              <img
+                src={image2}
+                alt="About Us Image"
+                className="object-cover rounded-lg shadow-md"
+              ></img>
+            </div>
             <div className="  line-height: 1.625; max-w-lg">
-              <div className="flex">
+              <div className="flex font-extrabold">
                 <h2 className="text-[30px]  mr-2 p-0 w-fit ">They </h2>
-                <span className="text-[30px] w-fit  m-0 p-0 text-customGreen font-extrabold ">
+                <span className="text-[30px] w-fit  m-0 p-0 text-[#1A906B]  ">
                   Choose Us
                 </span>
               </div>
@@ -118,7 +127,7 @@ function About() {
                 <li className="flex items-center gap-8">
                   <FontAwesome
                     name="fa-solid fa-check"
-                    className="p-2 bg-customGreen text-sm text-white rounded-lg"
+                    className="py-2 px-3 bg-[#1A906B] text-sm text-white rounded-lg"
                   />
                   <h2 className="m-0 p-0 font-bold leading-relaxed">
                     Expertise
@@ -127,7 +136,7 @@ function About() {
                 <li className="flex items-center gap-8">
                   <FontAwesome
                     name="fa-solid fa-check"
-                    className="p-2 bg-customGreen text-sm text-white rounded-lg"
+                    className="py-2 px-3 bg-[#1A906B] text-sm text-white rounded-lg"
                   />
                   <h2 className="m-0 p-0 font-bold leading-relaxed">
                     Timeliness
@@ -136,7 +145,7 @@ function About() {
                 <li className="flex items-center gap-8">
                   <FontAwesome
                     name="fa-solid fa-check"
-                    className="p-2 bg-customGreen text-sm text-white rounded-lg"
+                    className="py-2 px-3 bg-[#1A906B] text-sm text-white rounded-lg"
                   />
                   <h2 className="m-0 p-0 leading-relaxed font-bold">
                     Customization
@@ -145,7 +154,7 @@ function About() {
                 <li className="flex items-center gap-8">
                   <FontAwesome
                     name="fa-solid fa-check"
-                    className="p-2 bg-customGreen text-sm text-white rounded-lg"
+                    className="py-2 px-3 bg-[#1A906B] text-sm text-white rounded-lg"
                   />
                   <h2 className="m-0 p-0 font-bold leading-relaxed">
                     Quality Workmanship
@@ -154,13 +163,7 @@ function About() {
               </ul>
               <div className="mt-8"></div>
             </div>
-            <div className="mt-12 md:mt-0">
-              <img
-                src="https://images.unsplash.com/photo-1531973576160-7125cd663d86"
-                alt="About Us Image"
-                className="object-cover rounded-lg shadow-md"
-              ></img>
-            </div>
+            
           </div>
         </div>
       </section>

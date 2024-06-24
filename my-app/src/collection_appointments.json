@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name_of_user": "John Doe",
+        "amount_of_waste": "5 kg",
+        "type_of_waste": "Plastic",
+        "image": "image1.jpg",
+        "day": "2024-06-24",
+        "time": "10:00",
+        "location": "123 Main St, Cityville",
+        "paid_money": 20,
+        "is_free": false
+    },
+    {
+        "id": 2,
+        "name_of_user": "Jane Smith",
+        "amount_of_waste": "10 kg",
+        "type_of_waste": "Organic",
+        "image": "image2.jpg",
+        "day": "2024-06-24",
+        "time": "14:00",
+        "location": "456 Oak St, Townsville",
+        "paid_money": 15,
+        "is_free": false
+    },
+    {
+        "id": 3,
+        "name_of_user": "",
+        "amount_of_waste": "",
+        "type_of_waste": "",
+        "image": "",
+        "day": "2024-06-25",
+        "time": "09:00",
+        "location": "",
+        "paid_money": "",
+        "is_free": true
+    },
+    {
+        "id": 4,
+        "name_of_user": "Alice Johnson",
+        "amount_of_waste": "3 kg",
+        "type_of_waste": "Metal",
+        "image": "image3.jpg",
+        "day": "2024-06-25",
+        "time": "11:00",
+        "location": "789 Pine St, Villagetown",
+        "paid_money": 10,
+        "is_free": false
+    },
+    {
+        "id": 5,
+        "name_of_user": "Bob Brown",
+        "amount_of_waste": "8 kg",
+        "type_of_waste": "Glass",
+        "image": "image4.jpg",
+        "day": "2024-06-26",
+        "time": "08:00",
+        "location": "321 Birch St, Hamlet",
+        "paid_money": 25,
+        "is_free": false
+    }
+]
