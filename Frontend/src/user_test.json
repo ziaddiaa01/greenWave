@@ -1,0 +1,33 @@
+[
+    {
+        "id": "12345",
+        "name": "John Doe",
+        "email": "johndoe@example.com",
+        "cartItems": [
+            {
+                "id": 1,
+                "name": "Item One",
+                "description": "Description for Item One",
+                "price": 19.99,
+                "image": "https://via.placeholder.com/150",
+                "quantity":1
+            },
+            {
+                "id": 2,
+                "name": "Item Two",
+                "description": "Description for Item Two",
+                "price": 29.99,
+                "image": "https://via.placeholder.com/150",
+                "quantity":3
+            },
+            {
+                "id": 3,
+                "name": "Item Three",
+                "description": "Description for Item Three",
+                "price": 39.99,
+                "image": "https://via.placeholder.com/150",
+                "quantity":1
+            }
+        ]
+    }
+]

@@ -1,0 +1,25 @@
+[{
+    "userID": "12345",
+    "items": [
+      {
+        "id": 1,
+        "name": "Product 1",
+        "quantity": 2,
+        "price": 100.0,
+        "image": "url-to-image",
+        "description": "Description of product 1"
+      },
+      {
+        "id": 2,
+        "name": "Product 2",
+        "quantity": 1,
+        "price": 200.0,
+        "image": "url-to-image",
+        "description": "Description of product 2"
+      }
+    ],
+    "shipping":15,
+    "totalPrice": 300.0
+}
+]
+  
