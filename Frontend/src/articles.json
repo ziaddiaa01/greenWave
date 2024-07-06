@@ -2,22 +2,26 @@
   {
     "id": 1,
     "title": "AI and agriculture ",
-    "day": "19",
-    "month": "NOV",
+    "day": "31",
+    "month": "MAR",
     "category": "Science",
-    "author": "By Admin",
+    "author": "Ganes Kesari",
     "comments": 65,
-    "latest":true
+    "latest": true,
+    "content":"Artificial Intelligence is often used as a catchall phrase Here, it refers to the systematic collection of data, pertinent use of analytics ranging from simple descriptive summaries to deep learning algorithms, and advanced technologies such as computer vision, the internet of things, and geospatial analytics Let’s look at how AI helps address each of the above challenges. 1-PEST IDENTIFICATION AND CONTROL: Accurate, early identification and control of pests is essential to minimize crop damage and reduce the reliance on chemical pesticides, Data such as weather reports, historical pest activity, and high resolution images captured by drones or satellites are readily available today Machine learning models and computer vision can help predict pest invasions and identify pests in the field For example, Trapview has built a device that traps pests and identifies them It uses pheromones to attract pests, which are photographed by a camera in the device By leveraging Trapview’s database, AI identifies over 60 pest species, such as the codling moth, which afflicts apples, and the cotton bollworm, which can damage lettuce and tomatoes, Once identified, the system uses location and weather data to map out the likely impact of the insects and pushes the findings as an app notification to farmers, These AI-driven insights enable timely and targeted interventions, significantly reducing crop losses and chemical usage, TrapView reports that its customers have seen a 5% increase in yield and quality, and overall savings of 118 million euro in growers’ costs. 2-SOIL HEALTH MONITORING: Continuous monitoring and analysis of soil health are essential to ensuring optimal growing conditions and sustainable farming practices, Optimizing water use is crucial to ensuring crops receive precisely what they need, reducing waste and enhancing productivity,Data from inground sensors, farm machinery, drones, and satellites are used to analyze soil conditions, including moisture content, nutrient levels, and the presence of pathogens, Such soil health analysis helps predict water needs and automate irrigation systems,For example, CropX has built a platform specializing in soil health monitoring by leveraging real time data to help users review and compare vital parameters alongside crop performance, Farmers gain insights into soil type and vegetation indices like NDVI/normalized difference vegetation index, SAVI/soil adjusted vegetation index, and soil moisture index to optimize crop management strategies CropX reports that its solutions have led to a 57% reduction in water usage, a 15% reduction in fertilizer usage, and up to 70% yield increase.",
+    "conclusion": "CONCLUSION:  Integrating AI in agriculture is not just reshaping current practices but also paving the way for a sustainable and resilient future AI could become a master gardener, perpetually monitoring and fine tuning every growth stage in the farm, from seed selection to harvest and beyond, It can help adjust farming practices in real time to climatic shifts, ensuring optimal crop health and yield."
   },
   {
     "id": 2,
     "title": "Low Maintenance Landscape",
-    "day": "21",
-    "month": "NOV",
+    "day": "29",
+    "month": "MAY",
     "category": "Gardening",
-    "author": "By Admin",
+    "author": "Nafeesah Allen",
     "comments": 65,
-    "latest":true
+    "latest": true,
+    "content":"From implementing drought tolerant plants to swapping grass for mulch, gravel, or pavers, there are lots of ways to lessen the upkeep of your landscaping Introducing ground cover might save you time on mowing while implementing a xeriscape can eliminate the need to water your plants yourself Read on for some of our favorite ways to approach front yard landscaping from a low maintenance perspective.1-Play around with planters: When it comes to low maintenance front yard landscaping, planters are an obvious choice, They negate the need for lots of weeding, and they make watering more accessible, For this design, we used a mix of different planters for an eclectic aesthetic, At the base of the front steps, we added a concrete planter , The planter blends with some of the other industrial accents We also included a concrete planter right on the front steps, impactfully adding the address number to the face of the planter, Finally, we accentuated the front door with two staggered clay planters a larger one and a smaller one The combination of different planters throughout creates a dynamic look that doesn’t require a lot of effort to maintain.2-Window planters for whimsy : If you’re seeking low maintenance front yard landscaping ideas that allow you to turn up the charm, window planters are the key, Not only do these planters infuse this exterior with a whimsical vibe, but they are space efficient, We outlined the walkway and surrounded the front porch with mulch beds, marked with a mix of lush and colorful plants, Adding window boxes outside the porch windows and planters flanking the front door allows the landscaping to transcend, creating a dynamic façade, Because these boxes are elevated, they reduce the need for bending and kneeling, making planting and maintenance more accessible, You can fill window planters with a variety of plants, such as drought tolerant succulents, hardy annuals, or even perennials that require minimal care, You can even swap out plants seasonally to maximize the versatility these planters afford.3-Consider a xeriscape: Creating a xeriscape is an excellent low maintenance front yard landscaping idea, particularly suited for areas prone to drought or with limited water availability For this front yard, our designers used native, drought-resistant plants, significantly reducing the need for regular watering We accentuated with rigid boulders and subtle landscape lighting, complementing the staggered walkway pavers We also used gravel instead of grass, which is standard with xeriscaping The gravel retains soil moisture while also preventing weed growth, minimizing the time and effort needed for upkeep The hardy plants, ornamental grasses, and perennials create an eclectic, sustainable landscape that meshes with this desert style home seamlessly.4-Embrace evergreens: Evergreens offer year-round greenery and structure with minimal effort, We lined the area encompassing the entry of this house with hardy plants and evergreens that retain their foliage throughout the seasons,  These resilient evergreens provide consistent color, which achieves striking contrast to the red brick exterior, In terms of maintenance, the plants we recommended here require less frequent watering, Evergreens are also slow growing, so they only require occasional pruning to maintain their shape and size, Our designers also used mulch to fill the landscaping beds, which provides weed control.5-Get rid of the grass : If you’re not attached to the idea of a green, grassy front lawn, you can fill your space with other materials to eliminate the need for mowing, For this design, we created a vast concrete walkway lined with mulched landscaping beds, While there is plenty of landscaping, we made intentional choices to keep things low maintenance, Our designers opted for hardy plants with a couple of perennials for color, We also used window planters to elevate the landscaping onto the exterior, and we flanked the front door and garage doors with planters, Since we filled the mulch beds with layers of mixed foliage, the front yard still embraces nature, so the lack of grass doesn’t create a void.",
+    "conclusion": ""
   },
   {
     "id": 3,
@@ -29,41 +33,43 @@
     "publish": "By Admin",
     "comments": 15,
     "latest": true,
-    "content": 
-      "Its clear gardening for mental health is more than a passing trend Getting busy with plants is like an escape valve from the pressures and stress of everyday life, but there are other important benefits you wont want to miss out on Here are seven ways in which gardening and horticulture therapy can help if you are feeling lonely, low in energy and motivation, or anxious. 1-STRESS RELIEF: One of the main benefits of gardening for mental health is its ability to relieve stress Researchers saw this relaxing effect when investigating bathing in green or forest bathing, the Japanese concept of walking in forested areas, similar to German Kneipp therapy Gardening also provides a welcome break from our increasingly tech-dominated lives. 2-GROUNDING AND STRENGTHEN CONNECTIONS: Gardening fosters a sense of grounding, as it helps us reconnect with our roots as human beings People who get involved in gardening often experience a deeper sense of belonging and connection with nature This is no small feat think about how disconnected the majority of people are from something as basic as the origin of the food they eat. 3-STAYING PRESENT: Staying in the present moment through mindfulness has a long list of benefits, such as reduced rumination and stress reduction Gardening is a way of practicing mindfulness as you need to concentrate on what you are doing and you can also take time to enjoy the beauty around you. 4-FINDING A SENSE OF PURPOSE: Another benefit of gardening for mental health is you can achieve a sense of worth and purpose This happens when you get directly involved in something that is hands-on and can see the end result of your effort. 5-REDUCE THE RISK OF ALZHEIMERS AND DEMENTIA Gardening is related to better brain function and to improved concentration and memory Some studies have found that it can even reduce the risk of Alzheimers and dementia. 6-HELPS YOU TO KEEP IN SHAPE: Indeed, gardening involves a lot of physical exercise and so is a form of physical therapy Weeding, digging, carrying bags and pots around are all a good workout that can help you keep in shape. 7-STRENGTHENS YOUR IMMUNE SYSTEM: You can strengthen your immune system by simply being exposed to natural light and to Vitamin D while you are gardening outdoors So, dont be afraid to get your hands dirty it can be absorbed by inhalation or ingested from your vegetables"
-    ,
+    "content": "Its clear gardening for mental health is more than a passing trend Getting busy with plants is like an escape valve from the pressures and stress of everyday life, but there are other important benefits you wont want to miss out on Here are seven ways in which gardening and horticulture therapy can help if you are feeling lonely, low in energy and motivation, or anxious. 1-STRESS RELIEF: One of the main benefits of gardening for mental health is its ability to relieve stress Researchers saw this relaxing effect when investigating bathing in green or forest bathing, the Japanese concept of walking in forested areas, similar to German Kneipp therapy Gardening also provides a welcome break from our increasingly tech-dominated lives. 2-GROUNDING AND STRENGTHEN CONNECTIONS: Gardening fosters a sense of grounding, as it helps us reconnect with our roots as human beings People who get involved in gardening often experience a deeper sense of belonging and connection with nature This is no small feat think about how disconnected the majority of people are from something as basic as the origin of the food they eat. 3-STAYING PRESENT: Staying in the present moment through mindfulness has a long list of benefits, such as reduced rumination and stress reduction Gardening is a way of practicing mindfulness as you need to concentrate on what you are doing and you can also take time to enjoy the beauty around you. 4-FINDING A SENSE OF PURPOSE: Another benefit of gardening for mental health is you can achieve a sense of worth and purpose This happens when you get directly involved in something that is hands-on and can see the end result of your effort. 5-REDUCE THE RISK OF ALZHEIMERS AND DEMENTIA Gardening is related to better brain function and to improved concentration and memory Some studies have found that it can even reduce the risk of Alzheimers and dementia. 6-HELPS YOU TO KEEP IN SHAPE: Indeed, gardening involves a lot of physical exercise and so is a form of physical therapy Weeding, digging, carrying bags and pots around are all a good workout that can help you keep in shape. 7-STRENGTHENS YOUR IMMUNE SYSTEM: You can strengthen your immune system by simply being exposed to natural light and to Vitamin D while you are gardening outdoors So, dont be afraid to get your hands dirty it can be absorbed by inhalation or ingested from your vegetables",
     "conclusion": "CONCLUSION: Gardening boosts mental health"
   },
-    {
-      "id": 4,
-      "title": "Right Plants for Your Climate Zone",
-      "day": "15",
-      "month": "MAR",
-      "category": "Science",
-      "author": "Elon Musk",
-      "comments": 120,
-      "latest": false
-    },
-    {
-      "id": 5,
-      "title": "Global warming and climate changes",
-      "day": "10",
-      "month": "APR",
-      "category": "Science",
-      "author": "Nutritionist",
-      "comments": 85,
-      "latest": false
-    },
-    {
-      "id": 6,
-      "title": "Landscaping Trends for the Modern Homeowner",
-      "day": "25",
-      "month": "JUN",
-      "category": "Lifestyle",
-      "author": "Meditation Guru",
-      "comments": 50,
-      "latest": false
-    }
-  
-  
+  {
+    "id": 4,
+    "title": "Right Plants for Your Climate Zone",
+    "day": "15",
+    "month": "MAR",
+    "category": "Science",
+    "author": "Elon Musk",
+    "comments": 120,
+    "latest": false,
+    "content": "",
+    "conclusion": ""
+  },
+  {
+    "id": 5,
+    "title": "Global warming and climate changes",
+    "day": "10",
+    "month": "APR",
+    "category": "Science",
+    "author": "Nutritionist",
+    "comments": 85,
+    "latest": false,
+    "content": "",
+    "conclusion": ""
+  },
+  {
+    "id": 6,
+    "title": "Landscaping Trends for the Modern Homeowner",
+    "day": "25",
+    "month": "JUN",
+    "category": "Lifestyle",
+    "author": "Meditation Guru",
+    "comments": 50,
+    "latest": false,
+    "content": "",
+    "conclusion": ""
+  }
 ]

@@ -6,15 +6,20 @@ export const roles={
     user:'User'
 }
 
-Object.freeze(roles)
-const auth = (roles=[])=>{
-    return async (req,res,next)=>{
-        try{
+//Object.freeze(roles)
+export const auth = () => {
+    return async (req,res,next)=>
+        {
             const{authorization}=req.headers;
-            if(!authorization?.startwith(process.env.BEARER_KEY)){
+            //console.log(authorization);
+            if(!authorization){
+                return res.status(400).json({message:'Please Login First'})
+            }
+            if(!authorization.startsWith(process.env.BEARER_KEY)){
                 return res.json({message:"In-valid bearer key"})
             }
             const token = authorization.split(process.env.BEARER_KEY)[1]
+            console.log(token);
             if(!token){
                 return res,json({message:"In-valid Token"})
             }
@@ -26,16 +31,10 @@ const auth = (roles=[])=>{
             if(!authUser){
                 return res.json({message:"Not Registered Account"})
             }
-            if(!roles.includes(authUser.role)){
+            /*if(!roles.includes(authUser.role)){
                 res.status(StatusCodes.UNAUTHORIZED).json({message:"Not Authorized User"})
-            }
+            }*/
             req.user=authUser;
-            return next()
-        }
-        catch(error){
-            return res.json({message:"Catch Error",err:error?.message})
-        }
+            next()
     }
 }
-
-export default auth

@@ -4,9 +4,8 @@ import { getCourses } from "../api";
 import imageUrl from "../images/courses.png";
 import FontAwesome from "react-fontawesome";
 import defaultImage from "../images/course-1.jpg";
-
-export function loader() {
-  return defer({ courses: getCourses() });
+export async function loader() {
+  return defer({ courses: await getCourses() });
 }
 
 function Courses() {
@@ -17,12 +16,12 @@ function Courses() {
       <div className="grid grid-cols-1 sm:grid-cols-1 my-8 lg:grid-cols-3 md:grid-cols-3 gap-4">
         {courses.map((course) => {
           const parts = defaultImage.split("-");
-          parts[parts.length - 1] = `${course.id}.jpg`;
+          parts[parts.length - 1] = `${course._id}.jpg`;
           const imageUrl = parts.join("-");
           return (
             <Link
-              to={`${course.id}`}
-              key={course.id}
+              to={`${course._id}`}
+              key={course._id}
               className=" cursor-pointer h-fit transition duration-200 ease-in-out transform hover:scale-105   relative bg-white shadow-md rounded-lg pb-5 mb-4"
             >
               <img
@@ -68,7 +67,8 @@ function Courses() {
                 </span>
               </div>
               <div className="flex justify-center mt-4">
-                <button className=" rounded-full  px-4 py-2 bg-[#FF7426] text-white  transition duration-200 ease-in-out transform hover:scale-105">
+                <button 
+                className=" rounded-full  px-4 py-2 bg-[#FF7426] text-white  transition duration-200 ease-in-out transform hover:scale-105">
                   Enroll Now
                 </button>
               </div>

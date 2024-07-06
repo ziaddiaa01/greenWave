@@ -5,10 +5,15 @@ import FontAwesome from 'react-fontawesome';
 
 import defaultImage from '../images/article-1.jpg';
 
-export function loader({ params }) {
-  const id = Number(params.id);
-  const article = getArticle(id);
-  return article;
+export async function loader({ params }) {
+  const { id } = params; // Ensure 'id' matches the route parameter name
+  try {
+    const article = await getArticle({ id });
+    return article;
+  } catch (error) {
+    console.error('Error loading article:', error);
+    throw error;
+  }
 }
 
 export default function ArticleDetail() {

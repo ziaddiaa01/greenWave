@@ -1,20 +1,28 @@
 import React from "react";
 import { Link, useLoaderData, Await, defer } from "react-router-dom";
 import defaultImage from "../images/book-1.jpg";
-import { getBooks } from "../api";
+import { getBooks , addItemToCart } from "../api";
 import { isLoggedIn } from "../utils";
 
-export function loader() {
-  return defer({ books: getBooks() });
+export async function loader() {
+  return defer({ books: await getBooks() });
 }
 
-function handleCartClick() {
+async function handleCartClick(bookId) {
   const request = new Request(window.location.href);
   const pathname = new URL(request.url).pathname;
-  const response = isLoggedIn();
-  console.log(response);
-  if (!response) {
+
+  if (!isLoggedIn()) {
     window.location.href = `/login?message=You must log in first.&redirectTo=${pathname}`;
+  } else {
+    try {
+      const response = await addItemToCart({ bookId: bookId, quantity: 1 });
+      console.log(response.message);
+      alert(response.message);
+    } catch (error) {
+      console.error('Error adding item to cart:', error.message);
+      alert(error.message);
+    }
   }
 }
 
@@ -26,15 +34,15 @@ function Books() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {books.map((book) => {
           const parts = defaultImage.split("-");
-          parts[parts.length - 1] = `${book.id}.jpg`;
+          parts[parts.length - 1] = `${book._id}.jpg`;
           const imageUrl = parts.join("-");
 
           return (
             <div
-              key={book.id}
+              key={book._id}
               className="shadow-lg border border-gray-200 rounded-lg py-3 px-3 transition duration-200 ease-in-out transform hover:shadow-black hover:scale-105"
             >
-              <Link to={`${book.id}`}>
+              <Link to={`${book._id}`}>
                 <div className="relative">
                   <img
                     src={imageUrl}
@@ -63,7 +71,7 @@ function Books() {
                    
                   ) : (
                     <button
-                      onClick={() => handleCartClick()}
+                      onClick={() => handleCartClick(book._id)}
                       className="bg-customOrange rounded-3xl w-full text-sm  hover:scale-105 text-white  py-2  duration-300 ease-in-out "
                     >
                       Add to Cart

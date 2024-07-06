@@ -17,8 +17,14 @@ import Terms from './pages/Terms'
 import About from './pages/About'
 import Waste, { loader as collectionLoader, action as collectionAction }from './pages/Waste'
 import Gardening, { loader as gardeningLoader, action as gardeningAction }from './pages/Gardening'
-import ShoppingCart, { loader as shoppingCartLoader, action as  shoppingCartAction }from './pages/ShoppingCart'
+import ShoppingCart, { loader as shoppingCartLoader }from './pages/ShoppingCart'
 import Checkout, { loader as checkoutLoader, action as  checkoutAction }from './pages/Checkout'
+import ConfirmEmail, {action as  confirmEmailAction }from './pages/ConfirmEmail'
+import ChatBot from './pages/ChatBot'
+import Settings from './pages/Settings'
+
+
+
 
 
 import {
@@ -115,16 +121,28 @@ const router = createBrowserRouter(createRoutesFromElements(
       action={gardeningAction}
     />
     <Route 
-      path="cart/:userID" 
+      path="cart" 
       element={<ShoppingCart />}
       loader={shoppingCartLoader}
-      action={shoppingCartAction}
     />
     <Route 
-      path="checkout/:userID" 
+      path="checkout" 
       element={<Checkout />}
       loader={checkoutLoader}
       action={checkoutAction}
+    />
+    <Route 
+      path="confirm" 
+      element={<ConfirmEmail />}
+      action={confirmEmailAction}
+    />
+    <Route 
+      path="chatbot" 
+      element={<ChatBot />}
+    />
+    <Route 
+      path="settings" 
+      element={<Settings />}
     />
   </Route>
 ))

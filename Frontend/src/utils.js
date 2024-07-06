@@ -1,10 +1,10 @@
 
 export function isLoggedIn() {
     const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-        return false;
+    if (accessToken) {
+        return true;
     }
     else{
-        true
+        return false
     }
 }

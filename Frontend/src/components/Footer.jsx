@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 import FontAwesome from 'react-fontawesome';
 import logo from '../images/logo2.png'; // Import the logo
+import { isLoggedIn } from "../utils";
 
 export default function Footer() {
+    const request = new Request(window.location.href);
+    const pathname = new URL(request.url).pathname;
+  
+   
+      
   return (
     <footer>
         <div className="footer-content">
@@ -17,9 +23,13 @@ export default function Footer() {
             <div  className="right-side">
                 <h5>My Account</h5>
                 <ul>
-                    <li><Link to="/my-account">My Account</Link></li> {/* Use Link component */}
+                    <li><Link to="/seetings">My Account</Link></li> 
                     <li><Link to="/order-history">Order History</Link></li>
-                    <li><Link to="/cart">Shopping Cart</Link></li>
+                    <li>
+                        <Link to={isLoggedIn() ? "/cart" : `/login?message=You must log in first.&redirectTo=${pathname}` }>
+                    Shopping Cart
+                    </Link>
+                    </li>
                 </ul>
             </div>
             <div  className="right-side">

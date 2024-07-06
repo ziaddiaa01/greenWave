@@ -2,6 +2,7 @@ import express from 'express'
 import initApp from './index.router.js'
 import dotenv from 'dotenv'
 import path from 'path'
+
 import { fileURLToPath } from 'url'
 
 //set directory dirname 
@@ -13,4 +14,5 @@ const port = process.env.PORT || 3000
 
 initApp(app,express)
 app.listen(port,()=>console.log(`App is listening on port ${port}!`))
+
 

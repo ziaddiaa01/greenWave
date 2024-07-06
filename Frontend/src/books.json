@@ -1,6 +1,5 @@
 [
     {
-        "id": 1,
         "name": "Raised-Bed Gardening",
         "language": "English",
         "rating": 5,
@@ -14,7 +13,6 @@
         "description": ""
     },
     {
-        "id": 2,
         "name": "Essential Coping Skills",
         "language": "English",
         "rating": 5,
@@ -28,7 +26,6 @@
         "description": ""
     },
     {
-        "id": 3,
         "name": "Soil Science",
         "language": "English",
         "rating": 5,
@@ -42,11 +39,10 @@
         "description": ""
     },
     {
-        "id": 4,
         "name": "Veg Gardener's Bible",
         "language": "English",
         "rating": 5,
-        "price": 0,
+        "price": 300,
         "stockAmount": 50,
         "publisher": "Melanie Davis",
         "quantity":3,
@@ -56,7 +52,6 @@
         "description": ""
     },
     {
-        "id": 5,
         "name": "إرشادات توعوية عامة",
         "language": "Arabic",
         "rating": 5,
@@ -70,7 +65,6 @@
         "description": ""
     },
     {
-        "id": 6,
         "name": "الإنسان والمدينة",
         "language": "Arabic",
         "rating": 5,
@@ -84,7 +78,6 @@
         "description": ""
     },
     {
-        "id": 7,
         "name": "الاسمدة واستعملاتها",
         "language": "Arabic",
         "rating": 5,
@@ -98,7 +91,6 @@
         "description": ""
     },
     {
-        "id": 8,
         "name": "  أسطح المباني إلي حدائق ",
         "language": "Arabic",
         "rating": 5,

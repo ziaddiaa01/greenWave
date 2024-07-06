@@ -7,27 +7,28 @@ import {
     Link
 } from "react-router-dom"
 import { loginUser } from "../api"
-
 export function loader({ request }) {
     return new URL(request.url).searchParams.get("message")
 }
 
 export async function action({ request }) {
-    const formData = await request.formData()
-    const email = formData.get("email")
-    const password = formData.get("password")
-    const pathname = new URL(request.url)
-        .searchParams.get("redirectTo") || "/"
+    const formData = await request.formData();
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const pathname = new URL(request.url).searchParams.get("redirectTo") || "/";
     
     try {
-        const token = await loginUser({ email, password })
-        localStorage.setItem("accessToken", token)
-        return redirect(pathname)
+        const token = await loginUser({ email, password });
+        console.log(token.userID)
+        localStorage.setItem("accessToken", token.userToken);
+        localStorage.setItem("userID", token.userID);
+        
+        window.dispatchEvent(new Event("loginStatusChange")); 
+        return redirect(pathname);
     } catch(err) {
-        return err.message
+        return err.message;
     }
 }
-
 export default function Login() {
     const errorMessage = useActionData()
     const message = useLoaderData()

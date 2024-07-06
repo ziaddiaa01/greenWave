@@ -1,6 +1,6 @@
 import { useState } from "react";
 import FontAwesome from "react-fontawesome";
-import { useNavigation, Form, useActionData } from "react-router-dom";
+import { useNavigation, Form, useActionData , Link} from "react-router-dom";
 import { isLoggedIn } from "../utils";
 
 import {
@@ -14,23 +14,40 @@ export function loader() {
 export async function action({ request }) {
   const formData = await request.formData();
   const name = formData.get("name");
-  const email = formData.get("email");
   const phone = formData.get("phone");
   const address = formData.get("address");
-  const service_type = formData.get("service_type");
-  const appointemt = formData.get("appointemtId");
+  const greeningType = formData.get("serviceType");
+  const appointment = formData.get("appointment");
 
-  try {
-    await setGardeningAppointment({
-      name,
-      email,
-      phone,
-      address,
-      service_type,
-      appointemt,
-    });
-  } catch (err) {
-    return err.message;
+  const reqObj = new Request(window.location.href);
+  const pathname = new URL(reqObj.url).pathname;
+  const response = isLoggedIn();
+
+  if (response == false) {
+    window.location.href = `/login?message=You must log in first.&redirectTo=${pathname}`;
+  } else {
+    try {
+      if (!appointment) {
+        throw new Error("Selected appointment not found");
+      }
+
+      // Parse the appointment JSON string
+      const appointmentObj = JSON.parse(appointment);
+      const userID = localStorage.getItem("userID");
+      const response = await setGardeningAppointment({
+        userId: userID,
+        name,
+        phone,
+        address,
+        greeningType,
+        date: appointmentObj.day,
+        time: appointmentObj.time,
+      });
+
+      return JSON.stringify(response.message);
+    } catch (err) {
+      return err.message;
+    }
   }
 }
 
@@ -52,19 +69,12 @@ function Gardening() {
   const handleAppointmentSelection = (event) => {
     setSelectedAppointment(event.target.value);
   };
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const reqObj = new Request(window.location.href);
-    const pathname = new URL(reqObj.url).pathname;
-    const response = isLoggedIn();
-    if (!response) {
-      window.location.href = `/login?message=You must log in first.&redirectTo=${pathname}`;
-    } else {
-      e.target.submit(); // Submit the form if logged in
-    }
+  let errorMessageColor = "";
+  if (errorMessage && errorMessage.toLowerCase().includes("error")) {
+    errorMessageColor = "text-red-500"; 
+  } else if (errorMessage) {
+    errorMessageColor = "text-green-500"; 
   }
-
   return (
     <main className="">
       <div className="w-full text-center lg:text-left md:text-left py-4 px-[40px] bg-banner1 bg-cover bg-no-repeat">
@@ -336,9 +346,9 @@ function Gardening() {
                       Accessibility
                     </span>
                   </li>
-                  <button className="text-white bg-[#2DA884] border border-white hover:bg-white hover:text-[#2DA884] hover:border hover:border-[#2DA884]  font-medium rounded-3xl text-sm px-5 py-2.5 text-center ">
+                  <Link to={"/chatbot"} className="text-white bg-[#2DA884] border border-white hover:bg-white hover:text-[#2DA884] hover:border hover:border-[#2DA884]  font-medium rounded-3xl text-sm px-5 py-2.5 text-center ">
                     Chat With AI
-                  </button>
+                  </Link>
                 </ul>
               </div>
 
@@ -699,14 +709,13 @@ function Gardening() {
         </section>
         <Form
           method="post"
-          onSubmit={handleSubmit}
           className="mx-auto max-w-screen-xl px-4 py-3 sm:px-6 lg:px-8"
         >
           <div className="rounded-lg bg-white p-8 shadow-lg lg:p-12">
             <h3 className="text-center font-bold text-2xl">
               Choose your plan and get appointment
             </h3>
-            {errorMessage && <h3 className="text-red-500">{errorMessage}</h3>}
+            {errorMessage && <h3 className={`${errorMessageColor} font-bold text-center mt-1`}>{errorMessage.replace(/"/g, '')}</h3>}
 
             <div className="m-4">
               <label className="sr-only" htmlFor="name">
@@ -718,18 +727,6 @@ function Gardening() {
                 id="name"
                 name="name"
                 placeholder="Name"
-              />
-            </div>
-            <div className="m-4">
-              <label className="sr-only" htmlFor="email">
-                Email
-              </label>
-              <input
-                className="w-full  outline-none border-b  border-b-black p-3 text-sm"
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email address"
               />
             </div>
             <div className="m-4">
@@ -803,7 +800,7 @@ function Gardening() {
                 {filteredAppointments.length > 0 ? (
                   <div className="m-4">
                     <select
-                      name="appointmentId"
+                      name="appointment"
                       value={selectedAppointment}
                       onChange={handleAppointmentSelection}
                       className="   p-3 text-sm outline-none"
@@ -812,7 +809,14 @@ function Gardening() {
                         Select Appointment
                       </option>
                       {filteredAppointments.map((appointment) => (
-                        <option key={appointment.id} value={appointment.id}>
+                        <option
+                          required
+                          key={appointment.id}
+                          value={JSON.stringify({
+                            day: appointment.day,
+                            time: appointment.time,
+                          })}
+                        >
                           {appointment.day} at {appointment.time}
                         </option>
                       ))}

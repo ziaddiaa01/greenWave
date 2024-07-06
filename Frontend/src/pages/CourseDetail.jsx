@@ -1,33 +1,44 @@
-import { useLoaderData, Link } from "react-router-dom";
-import { getCourse } from "../api";
+import { useLoaderData } from "react-router-dom";
+import { getCourse , addItemToCart } from "../api";
 import { isLoggedIn } from "../utils";
 import FontAwesome from "react-fontawesome";
 
 
 import defaultImage from "../images/course-1.jpg";
 
-export function loader({ params }) {
-  const id = Number(params.id);
-  const course = getCourse(id);
-  return course;
+export async function loader({ params }) {
+  const { id } = params; // Ensure 'id' matches the route parameter name
+  try {
+    const course = await getCourse({ id });
+    return course;
+  } catch (error) {
+    console.error('Error loading course:', error);
+    throw error;
+  }
 }
-
 export default function BookDetail() {
   const course = useLoaderData();
   const parts = defaultImage.split("-");
   parts[parts.length - 1] = `${course.id}.jpg`;
   const imageUrl = parts.join("-");
 
-  function handleCartClick() {
+  async function handleCartClick() {
     const request = new Request(window.location.href);
     const pathname = new URL(request.url).pathname;
-    const response = isLoggedIn();
-    console.log(response);
-    if (!response) {
+  
+    if (!isLoggedIn()) {
       window.location.href = `/login?message=You must log in first.&redirectTo=${pathname}`;
+    } else {
+      try {
+        const response = await addItemToCart({ courseId: course._id, quantity: 1 });
+        console.log(response.message);
+        alert(response.message);
+      } catch (error) {
+        console.error('Error adding item to cart:', error.message);
+        alert(error.message);
+      }
     }
   }
-
   return (
     <div className="w-3/4 mx-auto mt-10 mb-10 flex-col flex items-center">
       <h3 className="font-bold text-left w-full text-4xl mb-10">{course.name}</h3>

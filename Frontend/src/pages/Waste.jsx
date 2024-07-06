@@ -21,18 +21,45 @@ export async function action({ request }) {
   const weight = formData.get("weight");
   const weightMetric = formData.get("weightMetric");
   const location = formData.get("location");
-  const photo = formData.get("photo");
   const appointment = formData.get("appointment");
-  try {
-    await setCollectionAppointment({
-      type,
-      weight: `${weight} ${weightMetric}`,
-      location,
-      photo,
-      appointment,
-    });
-  } catch (err) {
-    return err.message;
+  const weightStatus = formData.get("weightStatus");
+
+  if (weightStatus === "Rejected") {
+    alert(
+      "The weight you entered is not within the acceptable range. Please adjust the weight and try again."
+    );
+    return;
+  }
+
+  const reqObj = new Request(window.location.href);
+  const pathname = new URL(reqObj.url).pathname;
+  const response = isLoggedIn();
+
+  if (response == false) {
+    window.location.href = `/login?message=You must log in first.&redirectTo=${pathname}`;
+  } else {
+    try {
+      if (!appointment) {
+        throw new Error("Selected appointment not found");
+      }
+
+      // Parse the appointment JSON string
+      const appointmentObj = JSON.parse(appointment);
+      const userID = localStorage.getItem("userID");
+
+      const response = await setCollectionAppointment({
+        userId: userID,
+        type,
+        weight: `${weight} ${weightMetric}`,
+        date: appointmentObj.day,
+        time: appointmentObj.time,
+        location,
+      });
+
+      return JSON.stringify(response.message);
+    } catch (err) {
+      return err.message;
+    }
   }
 }
 
@@ -72,7 +99,8 @@ function Waste() {
       const criteria = weightCriteria[selectedWasteType];
       if (criteria) {
         const weightInKg = weightMetric === "kg" ? weight : weight * 0.453592; // convert lbs to kg
-        const accepted = weightInKg >= criteria.min && weightInKg <= criteria.max;
+        const accepted =
+          weightInKg >= criteria.min && weightInKg <= criteria.max;
         setWeightStatus(accepted ? "Accepted" : "Rejected");
       } else {
         setWeightStatus("Rejected"); // If no criteria, default to Rejected
@@ -85,24 +113,13 @@ function Waste() {
   useEffect(() => {
     calculateExpectedMoney();
     determineWeightStatus();
-  }, [selectedWasteType, weight, weightMetric, calculateExpectedMoney, determineWeightStatus]);
-
-  function handleSubmit(e) {
-    e.preventDefault(); // Prevent default form submission
-    if (weightStatus === "Rejected") {
-      alert("The weight you entered is not within the acceptable range. Please adjust the weight and try again.");
-      return; // Prevent form submission
-    }
-  
-    const reqObj = new Request(window.location.href);
-    const pathname = new URL(reqObj.url).pathname;
-    const response = isLoggedIn();
-    if (!response) {
-      window.location.href = `/login?message=You must log in first.&redirectTo=${pathname}`;
-    } else {
-      e.target.submit(); // Submit the form if logged in
-    }
-  }
+  }, [
+    selectedWasteType,
+    weight,
+    weightMetric,
+    calculateExpectedMoney,
+    determineWeightStatus,
+  ]);
 
   function handleWeightChange(e) {
     const value = e.target.value;
@@ -110,16 +127,23 @@ function Waste() {
       setWeight(value);
     }
   }
+  let errorMessageColor = "";
+  if (errorMessage && errorMessage.toLowerCase().includes("error")) {
+    errorMessageColor = "text-red-500"; // Set color to red for error
+  } else if (errorMessage) {
+    errorMessageColor = "text-green-500"; // Set color to green for success
+  }
   return (
     <main className="flex flex-col items-center">
-      <div className="w-[90%] mx-auto"><img className="w-full " src={banner} alt="Banner" /></div>
-      {errorMessage && <h3 className="text-red-500">{errorMessage}</h3>}
+      <div className="w-[90%] mx-auto">
+        <img className="w-full " src={banner} alt="Banner" />
+      </div>
+      {errorMessage && <h3 className={`${errorMessageColor} font-bold`}>{errorMessage.replace(/"/g, '')}</h3>}
       <Form
         method="post"
         replace
         encType="multipart/form-data"
         className="w-4/5 p-8  mx-auto text-center grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-        onSubmit={handleSubmit}
       >
         <div className="bg-[#FFFFFF] shadow-xl p-8 rounded-lg text-left">
           <h6 className="text-[#5DA646] text-xs mb-5">1 of 6</h6>
@@ -204,8 +228,8 @@ function Waste() {
           </p>
           <h6 className="text-[#1D2D47] text-xs mb-2">Your Address</h6>
           <div className="flex items-center">
-          <FontAwesome name="fa-solid fa-location-crosshairs" />
-          <input
+            <FontAwesome name="fa-solid fa-location-crosshairs" />
+            <input
               required
               type="text"
               name="location"
@@ -215,37 +239,38 @@ function Waste() {
         </div>
 
         <div className="bg-[#FFFFFF] shadow-xl p-8 rounded-lg text-left">
-          <h6 className="text-[#5DA646] text-xs mb-5">4 of 6</h6>
-          <h3 className="text-lg font-semibold mb-2 text-[#1D2D47] leading-loose">
-          Upload Image
-          </h3>
-          <input
-            required
-            type="file"
-            name="photo"
-            accept="image/*"
-            className="w-full border-dashed text-xs p-8 border-[#1D2D47] rounded h-[50%] "
-          />
-        </div>
-
-        <div className="bg-[#FFFFFF] shadow-xl p-8 rounded-lg text-left">
           <h6 className="text-[#5DA646] text-xs mb-5">5 of 6</h6>
           <h3 className="text-lg font-semibold mb-2 text-[#1D2D47] leading-loose">
-          Choose appointment
+            Choose appointment
           </h3>
           <p className="mb-5 font-normal text-sm text-[#1D2D47] leading-loose">
-          Choose your appointment to get your service  
+            Choose your appointment to get your service
           </p>
-          <select required name="appointment" className="w-full p-2 border rounded outline-none text-xs">
-            <option value="" disabled selected>Available appointment</option>
+          <select
+            required
+            name="appointment"
+            className="w-full p-2 border rounded outline-none text-xs"
+          >
+            <option value="" disabled selected>
+              Available appointment
+            </option>
             {availableAppointments.length > 0 ? (
               availableAppointments.map((appointment) => (
-                <option required key={appointment.id} value={appointment.id}>
+                <option
+                  required
+                  key={appointment.id}
+                  value={JSON.stringify({
+                    day: appointment.day,
+                    time: appointment.time,
+                  })}
+                >
                   {appointment.day} at {appointment.time}
                 </option>
               ))
             ) : (
-              <option value="" disabled>No appointments available</option>
+              <option value="" disabled>
+                No appointments available
+              </option>
             )}
           </select>
         </div>
@@ -253,10 +278,10 @@ function Waste() {
         <div className="bg-[#FFFFFF] shadow-xl p-8 rounded-lg text-left">
           <h6 className="text-[#5DA646] text-xs mb-5">6 of 6</h6>
           <h3 className="text-lg font-semibold mb-2 text-[#1D2D47] leading-loose">
-          Get paid
+            Get paid
           </h3>
           <p className="mb-5 font-normal text-sm text-[#1D2D47] leading-loose">
-          After the waste has been weighed you’d get paid for your efforts!
+            After the waste has been weighed you’d get paid for your efforts!
           </p>
           <h6 className="text-[#4D4D4D] text-xs mb-2">Current Profit</h6>
           <p className="text-2xl text-[#4D4D4D] font-extrabold">

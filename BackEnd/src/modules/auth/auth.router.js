@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as authController from "./controller/registeration.js"
+import { auth } from "../../middleware/auth.js";
 
 const router = Router()
 
@@ -13,13 +14,12 @@ router.patch('/send-code',authController.sendCode)
 
 router.patch('/reset-pass',authController.resetPassword)
 
-router.patch('/update',)
+router.patch('/update',auth(),authController.UpdateUser)
 
-router.patch('/change-pass')
+router.patch('/change-pass',auth(),authController.changePass)
 
-router.patch('/soft-del',)
+router.patch('/soft-del',auth(),authController.softDelete)
 
-//logout
-//refresh token 
+router.post('/logout',auth(),authController.logout)
+
 export default router
-

@@ -4,9 +4,10 @@ import defaultImage from '../images/article-1.jpg';
 import { getArticles } from '../api';
 import FontAwesome from 'react-fontawesome';
 
-export function loader() {
-  return defer({ articles: getArticles() });
+export async function loader() {
+  return defer({ articles: await getArticles() });
 }
+
 
 function Articles() {
   const dataPromise = useLoaderData();
@@ -20,8 +21,8 @@ function Articles() {
           const imageUrl = parts.join('-');
 
           return (
-            <div key={article.id} className="card">
-              <Link to={`${article.id}`}>
+            <div key={article._id} className="card">
+              <Link to={`${article._id}`}>
                 <img className="article-cover" src={imageUrl} alt="Article Cover" />
                 <div className="article-info">
                   <h3 className="article-date">
@@ -49,7 +50,7 @@ function Articles() {
                     </h3>
                   </div>
                   <h3 className="article-title">{article.title}</h3>
-                  <Link className="article-read" to={`${article.id}`}>
+                  <Link className="article-read" to={`${article._id}`}>
                     Read more <FontAwesome name="fa-thin fa-arrow-right" />
                   </Link>
                 </div>
