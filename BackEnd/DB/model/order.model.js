@@ -1,65 +1,85 @@
-import  { model, Schema,Types } from 'mongoose';
+import { model, Schema, Types } from "mongoose"
 
-const ItemSchema = new Schema({
-    itemType:{
-        type:String,
-        enum:['Product','Book','Course'],
-        required:true
-    },
-    itemId:{type:Schema.Types.ObjectId,required:true},
-    quantity:{
-        type:Number,
-        required:true,
-        min:1
-    },
-    price:{
-        type:Number,
-        required:true
-    }
-});
 const orderSchema = new Schema({
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+    userId:{
+        type:Types.ObjectId,
+        ref:'User',
+        required:true
     },
-    items: [
-        ItemSchema
-    ],
-    address:{type:String,required:true},
-    phone:{type:String},
-    notes:{type:String},
+    items:[{
+        product:{
+            productId: { type: Types.ObjectId, ref: 'Product' },
+            name:{type: String, required:false},
+            price: { type: Number , required:false},
+            paymentPrice: { type: Number , required:false},
+            quantity:{
+                type:Number,
+                //required:true,
+            },
+        },
+        book:{
+            bookId:{type: Types.ObjectId, ref:'Book'},
+            name: { type: String , required:false },
+            author: { type: String , required:false},
+            genre: { type: String , required:false},
+            price: {type: Number},
+            quantity:{
+                type:Number,
+                //required:true,
+            },
+        },
+        course:{
+            courseId:{type: Types.ObjectId, ref:'Course'},
+            name: { type: String , required:false},
+            price: { type: Number},
+            quantity:{
+                type:Number,
+                //required:true,
+            },
+        },
+    }],
+    address:{
+        type:String,
+        required:true
+    },
+    phone:{
+        type:String
+    },
+    note:{
+        type:String
+    },
     coupon:{
-        type:Types.ObjectId,ref:'Coupon'
+        type:Types.ObjectId,ref:'Coupon',
+        required:false
     },
     price:{
         type:Number,
         //required:true
     },
     paymentPrice:{
-        type:Number,
-        //required:true
+        type: Number,
+        //required: true
     },
     paymentMethod:{
         type:String,
         enum:['Cash','Card'],
         default:'Cash'
     },
-    status: {
+    status:{
         type: String,
-        /*
-        enum: ['pending', 'shipped', 'placed', 'canceled', 'delivered', 'rejected', 'refunded'],
-        default: 'placed',
-        */
-        enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'],
-        default: 'pending'
+        enum: ['pending', 'confirmed','placed','shipped', 'delivered', 'cancelled'],
+        default: 'placed'
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
+    reason:{
+        type: String,
+        required:false
     }
-});
 
-const orderModel = model('Order', orderSchema);
+},{
+    timestamps:true
+}
+);
 
-export default orderModel;
+const ordermodel = model('Order',orderSchema)
+
+export default ordermodel

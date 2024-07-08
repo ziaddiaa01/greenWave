@@ -3,7 +3,7 @@ import { useLoaderData, Await, defer, Link } from "react-router-dom";
 import { getCourses } from "../api";
 import imageUrl from "../images/courses.png";
 import FontAwesome from "react-fontawesome";
-import defaultImage from "../images/course-1.jpg";
+import defaultImage from "../images/course-6686fb554515995779e96b6d.jpg";
 export async function loader() {
   return defer({ courses: await getCourses() });
 }

@@ -4,7 +4,7 @@ import { isLoggedIn } from "../utils";
 import FontAwesome from "react-fontawesome";
 
 
-import defaultImage from "../images/course-1.jpg";
+import defaultImage from "../images/course-6686fb554515995779e96b6d.jpg";
 
 export async function loader({ params }) {
   const { id } = params; // Ensure 'id' matches the route parameter name
@@ -19,7 +19,7 @@ export async function loader({ params }) {
 export default function BookDetail() {
   const course = useLoaderData();
   const parts = defaultImage.split("-");
-  parts[parts.length - 1] = `${course.id}.jpg`;
+  parts[parts.length - 1] = `${course._id}.jpg`;
   const imageUrl = parts.join("-");
 
   async function handleCartClick() {

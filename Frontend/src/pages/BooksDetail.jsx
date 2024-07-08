@@ -1,6 +1,7 @@
 import { useLoaderData, Link } from "react-router-dom";
 import { getBook , addItemToCart} from "../api";
 import { isLoggedIn } from "../utils";
+import defaultImage from "../images/book-668703d94515995779e96b74.jpg";
 
 
 export async function loader({ params }) {
@@ -16,7 +17,9 @@ export async function loader({ params }) {
 
 export default function BookDetail() {
   const book = useLoaderData();
-
+  const parts = defaultImage.split("-");
+  parts[parts.length - 1] = `${book.id}.jpg`;
+  const imageUrl = parts.join("-");
   async function handleCartClick() {
     const request = new Request(window.location.href);
     const pathname = new URL(request.url).pathname;
@@ -40,7 +43,7 @@ export default function BookDetail() {
     <div className="container mx-auto px-4 py-8">
       <div className="md:flex md:items-center">
         <div className="md:w-1/2 md:mr-8 mb-4 md:mb-0">
-          <img className="rounded-lg"  alt="Product" />
+          <img className="rounded-lg" src={imageUrl} alt={book.name} />
         </div>
         <div className="md:w-1/2">
           <h2 className="text-3xl font-semibold mb-4">{book.name}</h2>

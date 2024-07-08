@@ -137,7 +137,6 @@ export const getProductById = async (req, res,next) => {
 export const getAllProducts = async (req, res) => {
     const selectall = productModel.find()
     const api = new ApiFeatures(selectall,req.query)
-    .pagination(productModel)
     .sort()
     .filter()
     .search()

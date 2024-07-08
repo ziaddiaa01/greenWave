@@ -3,8 +3,8 @@ import bookModel from '../../../DB/model/book.model.js';
 // 1] Add Book
 export const addBook = async (req, res) => {
     try {
-        const { title, author, genre, publishedDate, price, description, coverImage, createdBy } = req.body;
-        const book = new bookModel({ title, author, genre, publishedDate, price, description, coverImage, createdBy });
+        const { name, author, genre, publishedDate, price, description, coverImage, createdBy } = req.body;
+        const book = new bookModel({ name, author, genre, publishedDate, price, description, coverImage, createdBy });
         await book.save();
         res.status(201).json({ message: 'Book added successfully', book });
     } catch (error) {
@@ -16,10 +16,10 @@ export const addBook = async (req, res) => {
 export const updateBook = async (req, res) => {
     try {
         const { bookId } = req.params;
-        const { title, author, genre, publishedDate, price, description, coverImage } = req.body;
+        const { name, author, genre, publishedDate, price, description, coverImage } = req.body;
         const book = await bookModel.findByIdAndUpdate(
             bookId,
-            { title, author, genre, publishedDate, price, description, coverImage },
+            { name, author, genre, publishedDate, price, description, coverImage },
             { new: true }
         );
         if (!book) {
@@ -49,7 +49,7 @@ export const deleteBook = async (req, res) => {
 export const searchBooks = async (req, res) => {
     try {
         const { query } = req.query;
-        const books = await bookModel.find({ title: { $regex: query, $options: 'i' } });
+        const books = await bookModel.find({ name: { $regex: query, $options: 'i' } });
         res.status(200).json(books);
     } catch (error) {
         res.status(400).json({ message: error.message });

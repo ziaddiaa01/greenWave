@@ -21,7 +21,9 @@ import ShoppingCart, { loader as shoppingCartLoader }from './pages/ShoppingCart'
 import Checkout, { loader as checkoutLoader, action as  checkoutAction }from './pages/Checkout'
 import ConfirmEmail, {action as  confirmEmailAction }from './pages/ConfirmEmail'
 import ChatBot from './pages/ChatBot'
+import ThankYou from './pages/ThankYou'
 import Settings from './pages/Settings'
+import OrderHistory, {loader as  orderHistoryLoader }from './pages/OrderHistory'
 
 
 
@@ -141,8 +143,17 @@ const router = createBrowserRouter(createRoutesFromElements(
       element={<ChatBot />}
     />
     <Route 
+      path="thanks" 
+      element={<ThankYou />}
+    />
+    <Route 
       path="settings" 
       element={<Settings />}
+    />
+    <Route 
+      path="orders" 
+      element={<OrderHistory />}
+      loader={orderHistoryLoader}
     />
   </Route>
 ))

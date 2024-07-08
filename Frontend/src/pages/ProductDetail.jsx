@@ -3,13 +3,14 @@ import { useLoaderData  } from 'react-router-dom';
 import { getProduct ,addItemToCart } from '../api';
 import FontAwesome from 'react-fontawesome';
 import { isLoggedIn } from '../utils';
+import defaultImage from '../images/product-6689f8ae0221a8280371a5ab.jpg';
 
 
 export async function loader({ params }) {
   const { id } = params; // Ensure 'id' matches the route parameter name
   try {
     const product = await getProduct({ id });
-    return product;
+    return product.product;
   } catch (error) {
     console.error('Error loading product:', error);
     throw error;
@@ -18,7 +19,9 @@ export async function loader({ params }) {
 
 export default function ProductDetail() {
   const product = useLoaderData();
-
+  const parts = defaultImage.split('-');
+  parts[parts.length - 1] = `${product._id}.jpg`;
+  const imageUrl = parts.join('-');
   const [quantity, setQuantity] = useState(1); // Default quantity is 1
 
   async function handleCartClick() {
@@ -30,7 +33,7 @@ export default function ProductDetail() {
       window.location.href = `/login?message=You must log in first.&redirectTo=${pathname}`;
     } else {
       // Check if the selected quantity exceeds the available stock
-      if (quantity > product.stockAmount) {
+      if (quantity > product.stock) {
         console.log('Not enough stock available.');
         return;
       }
@@ -50,7 +53,7 @@ export default function ProductDetail() {
     <div className="container mx-auto px-4 py-8">
       <div className="md:flex md:items-center">
         <div className="md:w-1/2 md:mr-8 mb-4 md:mb-0">
-          <img alt="Product" />
+          <img src={imageUrl} alt={product.name} />
         </div>
         <div className="md:w-1/2">
           <h2 className="text-3xl font-semibold mb-4">{product.name}</h2>
@@ -73,7 +76,7 @@ export default function ProductDetail() {
               <>
                 <span className="text-gray-600 mr-2">Price:</span>
                 <span className="text-gray-500 line-through">${product.price}</span>
-                <span className="text-gray-600 font-semibold ml-2">${product.price - product.saleAmount}</span>
+                <span className="text-gray-600 font-semibold ml-2">${product.price - product.soldItems}</span>
               </>
             ) : (
               <>
@@ -96,14 +99,14 @@ export default function ProductDetail() {
               onClick={() => setQuantity(quantity + 1)}
               className="bg-gray-200 text-gray-700 font-bold py-1 px-2 rounded-r hover:bg-gray-300"
               type="button"
-              disabled={quantity >= product.stockAmount}
+              disabled={quantity >= product.stock}
             >
               +
             </button>
           </div>
           <div className="text-gray-600 mb-4">
             <span className="mr-2">Stock:</span>
-            <span className="text-gray-700">{product.stockAmount}</span>
+            <span className="text-gray-700">{product.stock}</span>
           </div>
           <button
             onClick={() => handleCartClick()}

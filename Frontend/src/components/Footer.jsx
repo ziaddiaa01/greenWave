@@ -24,7 +24,7 @@ export default function Footer() {
                 <h5>My Account</h5>
                 <ul>
                     <li><Link to="/seetings">My Account</Link></li> 
-                    <li><Link to="/order-history">Order History</Link></li>
+                    <li><Link to="/orders">Order History</Link></li>
                     <li>
                         <Link to={isLoggedIn() ? "/cart" : `/login?message=You must log in first.&redirectTo=${pathname}` }>
                     Shopping Cart

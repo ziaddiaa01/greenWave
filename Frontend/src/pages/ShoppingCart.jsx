@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLoaderData, defer, Await, Link } from "react-router-dom";
 import { getUserShoppingCart, addItemToCart, removeItemFromCart } from "../api";
+import defaultImageCourse from "../images/course-6686fb554515995779e96b6d.jpg";
+import defaultImageProduct from '../images/product-6689f8ae0221a8280371a5ab.jpg';
+import defaultImageBook from "../images/book-668703d94515995779e96b74.jpg";
+
+
 
 export async function loader() {
   const cart = await getUserShoppingCart();
@@ -14,6 +19,7 @@ export default function ShoppingCart() {
   const [quantities, setQuantities] = useState(
     initialCartItems.items.map((item) => item.quantity)
   );
+
 
   useEffect(() => {
     setQuantities(cartItems.items.map((item) => item.quantity));
@@ -62,11 +68,41 @@ export default function ShoppingCart() {
       // Handle error gracefully
     }
   };
+  const getItemImageUrl = (item) => {
+    if (item.productId) {
+      const parts = defaultImageProduct.split("-");
+      parts[parts.length - 1] = `${item.productId._id}.jpg`;
+      return parts.join("-");
+    } else if (item.bookId) {
+      const parts = defaultImageBook.split("-");
+      parts[parts.length - 1] = `${item.bookId._id}.jpg`;
+      return parts.join("-");
+    } else if (item.courseId) {
+      const parts = defaultImageCourse.split("-");
+      parts[parts.length - 1] = `${item.courseId._id}.jpg`;
+      return parts.join("-");
+    } else {
+      // Default image if item type is unknown (though ideally should not happen)
+      return defaultImageProduct; // Adjust default image as needed
+    }
+  };
 
-  const subtotal = cartItems.items.reduce(
-    (acc, item, index) => acc + item.price * quantities[index],
-    0
-  );
+  const subtotal = cartItems.items.reduce((acc, item, index) => {
+    let itemPrice = 0;
+  
+    // Determine the price based on the item type
+    if (item.productId) {
+      itemPrice = item.productId.price || 0;
+    } else if (item.bookId) {
+      itemPrice = item.bookId.price || 0;
+    } else if (item.courseId) {
+      itemPrice = item.courseId.price || 0;
+    }
+  
+    const itemQuantity = quantities[index] || 0;
+    return acc + (itemPrice * itemQuantity);
+  }, 0);
+  
   const shipping = 5.0;
   const tax = subtotal * 0.1;
   const total = subtotal + tax + shipping;
@@ -84,21 +120,21 @@ export default function ShoppingCart() {
                 <li key={item._id} className="py-4 flex items-center space-x-4">
                   {item.productId && (
                     <img
-                      src={item.productId.image}
+                      src={getItemImageUrl(item)}
                       alt={item.productId.name}
                       className="flex-none w-24 h-24 rounded-lg border border-gray-200"
                     />
                   )}
                   {item.bookId && (
                     <img
-                      src={item.bookId.image}
+                    src={getItemImageUrl(item)}
                       alt={item.bookId.name}
                       className="flex-none w-24 h-24 rounded-lg border border-gray-200"
                     />
                   )}
                   {item.courseId && (
                     <img
-                      src={item.courseId.image}
+                    src={getItemImageUrl(item)}
                       alt={item.courseId.name}
                       className="flex-none w-24 h-24 rounded-lg border border-gray-200"
                     />
@@ -175,7 +211,7 @@ export default function ShoppingCart() {
                           ? item.productId.price
                           : item.bookId
                           ? item.bookId.price
-                          : item.courseId.price) * quantities[index].toFixed(2)}
+                          : item.courseId.price) }
                       </div>
                     </div>
                   </div>

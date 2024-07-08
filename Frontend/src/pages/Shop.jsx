@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import { getProducts, addItemToCart } from "../api";
 import FontAwesome from "react-fontawesome";
+import defaultImage from "../images/product-6689f8ae0221a8280371a5ab.jpg";
+
 import { isLoggedIn } from "../utils";
 
 export async function loader() {
@@ -103,6 +105,9 @@ export default function Shop() {
       setDisplayedProductsCount(displayedProducts.length);
 
       const productsElements = displayedProducts.map((product) => {
+        const parts = defaultImage.split("-");
+      parts[parts.length - 1] = `${product._id}.jpg`;
+      const imageUrl = parts.join("-");
         return (
           <div
             key={product._id}
@@ -119,7 +124,7 @@ export default function Shop() {
             >
               <div className="relative">
                 <div className="absolute top-3 left-3">
-                  {product.stockAmount === 0 && (
+                  {product.stock === 0 && (
                     <div className="rounded bg-customGrey text-center text-white px-3 py-2 text-xs font-normal">
                       Out of stock
                     </div>
@@ -130,7 +135,7 @@ export default function Shop() {
                     </div>
                   )}
                 </div>
-                <img alt={product.name} className="h-64" />
+                <img alt={product.name} src={imageUrl} className="h-64 w-fit mx-auto" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition rounded-sm duration-300 ease-in-out bg-black bg-opacity-50">
                   <p className="text-white font-bold text-lg opacity-0 hover:opacity-100 transition duration-300 ease-in-out">
                     View Product

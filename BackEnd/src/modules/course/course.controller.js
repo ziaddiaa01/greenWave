@@ -3,8 +3,8 @@ import courseModel from '../../../DB/model/course.model.js';
 // 1] Add Course
 export const addCourse = async (req, res) => {
     try {
-        const { title, description, duration, price, instructor, category, image, createdBy } = req.body;
-        const course = new courseModel({ title, description, duration, price, instructor, category, image, createdBy });
+        const { name, description, duration, price, instructor, category, image, createdBy } = req.body;
+        const course = new courseModel({ name, description, duration, price, instructor, category, image, createdBy });
         await course.save();
         res.status(201).json({ message: 'Course added successfully', course });
     } catch (error) {
@@ -16,10 +16,10 @@ export const addCourse = async (req, res) => {
 export const updateCourse = async (req, res) => {
     try {
         const { courseId } = req.params;
-        const { title, description, duration, price, instructor, category, image, rating } = req.body;
+        const { name, description, duration, price, instructor, category, image, rating } = req.body;
         const course = await courseModel.findByIdAndUpdate(
             courseId,
-            { title, description, duration, price, instructor, category, image, rating },
+            { name, description, duration, price, instructor, category, image, rating },
             { new: true }
         );
         if (!course) {
@@ -49,7 +49,7 @@ export const deleteCourse = async (req, res) => {
 export const searchCourse = async (req, res) => {
     try {
         const { query } = req.query;
-        const courses = await courseModel.find({ title: { $regex: query, $options: 'i' } });
+        const courses = await courseModel.find({ name: { $regex: query, $options: 'i' } });
         res.status(200).json(courses);
     } catch (error) {
         res.status(400).json({ message: error.message });

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const { Schema, Types } = mongoose;
 
 const courseSchema = new Schema({
-    title: { type: String, required: true, unique: true, lowercase: true },
+    name: { type: String, required: false, unique: true, lowercase: true },
     description: { type: String, required: true, lowercase: true },
     duration: { type: Number, required: true },
     price: { type: Number, required: true, default: 0 },

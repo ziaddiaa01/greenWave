@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLoaderData, Await, defer } from "react-router-dom";
-import defaultImage from "../images/book-1.jpg";
+import defaultImage from "../images/book-668703d94515995779e96b74.jpg";
 import { getBooks , addItemToCart } from "../api";
 import { isLoggedIn } from "../utils";
 

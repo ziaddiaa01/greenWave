@@ -1,49 +1,45 @@
-// ChatBot.js
 import { useState } from "react";
 
-export default function ChatBot() {
-  const API_KEY = "sk-proj-GtlKjvV8ASSh6Dumm0jRT3BlbkFJZqMryk8xhXJ6O6gVvWVP";
+const ChatBot = () => {
+  const API_KEY = "AIzaSyAVZpUTEA5VwqEgAvltHkz6b6jJwDmGQWA";
   const [isTyping, setIsTyping] = useState(false);
   const [messages, setMessages] = useState([
     {
-      role: "system",
-      content:
-        "How can I help you ?",
+      role: "assistant",
+      content: "How can I help you?",
     },
   ]);
 
   const chatData = async (userMessage) => {
     try {
-      const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [...messages, { role: "user", content: userMessage }],
-            temperature: 0.7,
-          }),
-        }
-      );
+      setIsTyping(true);
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${API_KEY}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: userMessage }],
+            },
+          ],
+        }),
+      });
 
       if (!response.ok) {
-        throw new Error(
-          "Oops! Something went wrong while processing your request."
-        );
+        throw new Error("Oops! Something went wrong while processing your request.");
       }
 
       const responseData = await response.json();
       setIsTyping(false);
+
+      const assistantReply = responseData.candidates[0].content.parts[0].text; // Accessing the text from the response
       setMessages((prevMessages) => [
         ...prevMessages,
-        {
-          role: "assistant",
-          content: responseData.choices[0].message.content,
-        },
+        { role: "assistant", content: assistantReply },
       ]);
     } catch (error) {
       console.error("Error while fetching chat data:", error);
@@ -57,16 +53,15 @@ export default function ChatBot() {
       { role: "user", content: messageContent },
     ]);
     chatData(messageContent);
-    setIsTyping(true);
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="max-w-md mx-auto my-5 border border-5 p-3 h-fit bg-[#333333] shadow-lg rounded-lg overflow-hidden">
       <div className="px-4 py-6">
         {messages.map((message, index) => (
           <div key={index} className="mb-4">
-            <h3 className="text-gray-600">{message.role}</h3>
-            <p className="text-lg">{message.content}</p>
+            <h3 className="text-customGreen">{message.role}</h3>
+            <p className="text-lg text-white">{message.content}</p>
           </div>
         ))}
         {isTyping && <p className="text-gray-500">Bot is typing...</p>}
@@ -80,23 +75,25 @@ export default function ChatBot() {
             e.target.reset();
           }
         }}
-        className="bg-gray-100 px-4 py-3 flex items-center"
+        className="bg-gray-500 px-4 py-3 flex rounded-md items-center"
       >
         <input
           type="text"
           name="input"
           placeholder="Type your message..."
           disabled={isTyping}
-          className="flex-1 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-l-md"
+          className="flex-1 py-2 px-3 focus:outline-none focus:ring-2 focus:ring-customGreen rounded-l-md"
         />
         <button
           type="submit"
           disabled={isTyping}
-          className="py-2 px-4 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="py-2 px-4 bg-green-700 text-white rounded-r-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-black"
         >
           Send
         </button>
       </form>
     </div>
   );
-}
+};
+
+export default ChatBot;

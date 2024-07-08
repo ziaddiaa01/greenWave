@@ -45,7 +45,7 @@ export async function signupUser({
     throw new Error(data.message || "Signup failed");
   }
 
-  return data.token;
+  return data;
 }
 
 export async function confirmEmail({ email, code }) {
@@ -186,6 +186,25 @@ export async function getProducts() {
   }
   return data;
 }
+
+export async function getOrders() {
+  const token = localStorage.getItem("accessToken");
+  const BEARER_KEY = "Test_";
+  const response = await fetch("/api/order/getall", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization" : `${BEARER_KEY}${token}`
+    },
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Orders fetch failed");
+  }
+  return data;
+}
+
 
 
 export async function getBooks() {

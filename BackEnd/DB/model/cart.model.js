@@ -5,11 +5,26 @@ const cartSchema = new Schema({
     userId: { type: Types.ObjectId, ref: 'User', required: true },
     items: [
         {
-            productId: { type: Types.ObjectId, ref: 'Product',required: false },
-            bookId : {type :Types.ObjectId,ref:'Book',required: false },
-            courseId : {type :Types.ObjectId,ref:'Course',required: false },
-            quantity: { type: Number, default: 1,required: true  },
-            price:{type: Number, default: 0,required: true }
+            productId: { 
+                type: Types.ObjectId, 
+                ref: 'Product',
+                required: false 
+            },
+            bookId : {
+                type :Types.ObjectId,
+                ref:'Book',
+                required: false 
+            },
+            courseId : {
+                type :Types.ObjectId,
+                ref:'Course',
+                required: false 
+            },
+            quantity: { 
+                type: Number, 
+                default: 1,
+                required: true  
+            }
         }
     ]
 }, {

@@ -3,7 +3,7 @@
         "id": 1,
         "name_of_user": "",
         "type_of_service": "Home",
-        "day": "2024-06-25",
+        "day": "2024-08-25",
         "time": "11:00",
         "location": "",
         "is_free": true
@@ -12,7 +12,7 @@
         "id": 2,
         "name_of_user": "",
         "type_of_service": "Roof",
-        "day": "2024-06-25",
+        "day": "2024-08-25",
         "time": "13:00",
         "location": "",
         "is_free": true
@@ -21,7 +21,7 @@
         "id": 3,
         "name_of_user": "",
         "type_of_service": "Garden",
-        "day": "2024-06-25",
+        "day": "2024-08-25",
         "time": "15:00",
         "location": "",
         "is_free": true
@@ -30,7 +30,7 @@
         "id": 4,
         "name_of_user": "Jhone doe",
         "type_of_service": "Home",
-        "day": "2024-06-26",
+        "day": "2024-08-26",
         "time": "11:00",
         "location": "Al dokki ",
         "is_free": false

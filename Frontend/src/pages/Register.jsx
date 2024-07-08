@@ -15,7 +15,8 @@ export async function action({ request }) {
             throw new Error('Passwords do not match');
         }
         const response = await signupUser({ firstName, lastName, email, password, phone, DOB });
-        if(response.status == 200){
+        console.log(response)
+        if(response.message == "Done"){
             return redirect('/confirm');
         }
         else{

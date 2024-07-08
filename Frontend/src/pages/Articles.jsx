@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLoaderData, Await, defer } from 'react-router-dom';
-import defaultImage from '../images/article-1.jpg';
+import defaultImage from '../images/article-6686cf5b4515995779e96b3a.jpg';
 import { getArticles } from '../api';
 import FontAwesome from 'react-fontawesome';
 
@@ -17,7 +17,7 @@ function Articles() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {articles.map((article) => {
           const parts = defaultImage.split('-');
-          parts[parts.length - 1] = `${article.id}.jpg`;
+          parts[parts.length - 1] = `${article._id}.jpg`;
           const imageUrl = parts.join('-');
 
           return (

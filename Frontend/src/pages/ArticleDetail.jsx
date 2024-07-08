@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router-dom';
 import { getArticle } from '../api';
 import FontAwesome from 'react-fontawesome';
 
-import defaultImage from '../images/article-1.jpg';
+import defaultImage from '../images/article-6686cf5b4515995779e96b3a.jpg';
 
 export async function loader({ params }) {
   const { id } = params; // Ensure 'id' matches the route parameter name
@@ -19,7 +19,7 @@ export async function loader({ params }) {
 export default function ArticleDetail() {
   const article = useLoaderData();
   const parts = defaultImage.split('-');
-  parts[parts.length - 1] = `${article.id}.jpg`;
+  parts[parts.length - 1] = `${article._id}.jpg`;
   const imageUrl = parts.join('-');
 
   // State to track the scroll position
