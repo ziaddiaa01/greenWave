@@ -9,23 +9,23 @@ const wasteCollectionSchema = new Schema({
     type: {
       type: String,
       enum: ['Plastic', 'Glass', 'Metal', 'Organic', 'Paper'],
-      required: true,
+      required: false,
     },
     weight: {
       type: String, 
-      required: true,
+      required: false,
     },
     date: {
       type: String,
-      required: true,
+      required: false,
     },
     time: {
       type: String,
-      required: true,
+      required: false,
     },
     location: {
       type: String,
-      required: true,
+      required: false,
     },
   }, {
     timestamps: true

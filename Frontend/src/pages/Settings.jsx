@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
-import { Form } from 'react-router-dom'; // Assuming Form component is imported correctly
-import { resetPassword, changePassword, softDeleteUser, updateUser } from '../api'; // Import API functions
+import { useState } from "react";
+import { Form, defer, useLoaderData } from "react-router-dom"; // Assuming Form component is imported correctly
+import {
+  resetPassword,
+  getUserData,
+  changePassword,
+  softDeleteUser,
+  updateUser,
+} from "../api"; // Import API functions
+
+export async function loader() {
+  const userData = await getUserData();
+  return defer(userData.user);
+}
 
 function Settings() {
-  const [email, setEmail] = useState('');
-  const [code, setCode] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [oldPassword, setOldPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [message, setMessage] = useState('');
-
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const userInfo = useLoaderData();
   const handleResetPassword = async (e) => {
     e.preventDefault();
     try {
       await resetPassword({ email, code, newPassword });
-      setMessage('Password reset successful!');
+      setMessage("Password reset successful!");
     } catch (error) {
       setMessage(`Error resetting password: ${error.message}`);
     }
@@ -26,7 +37,7 @@ function Settings() {
     e.preventDefault();
     try {
       await changePassword({ oldPassword, newPassword });
-      setMessage('Password changed successfully!');
+      setMessage("Password changed successfully!");
     } catch (error) {
       setMessage(`Error changing password: ${error.message}`);
     }
@@ -36,33 +47,59 @@ function Settings() {
     e.preventDefault();
     try {
       await updateUser({ firstName, lastName, email, phone });
-      setMessage('User updated successfully!');
+      setMessage("User updated successfully!");
     } catch (error) {
       setMessage(`Error updating user: ${error.message}`);
     }
   };
-  
 
   const handleSoftDeleteUser = async (e) => {
     e.preventDefault();
     try {
       await softDeleteUser();
-      setMessage('User account soft deleted successfully!');
+      setMessage("User account soft deleted successfully!");
     } catch (error) {
       setMessage(`Error during soft delete: ${error.message}`);
     }
   };
 
-  return (
+  return ( <>
+  <div className="bg-[#bababa] max-w-lg mx-auto p-4 my-10 overflow-hidden shadow rounded-lg border">
+        <div className="px-4 py-5 sm:px-6">
+          <h3 className="text-3xl text-center leading-6 font-bold text-gray-900">
+            My Profile
+          </h3>
+        </div>
+        <div className="border-t border-gray-800 px-4 py-5 sm:p-0">
+          <dl className="sm:divide-y sm:divide-gray-800">
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">Full name</dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {userInfo.firstName}
+                {userInfo.lastName}
+              </dd>
+            </div>
+            <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt className="text-sm font-medium text-gray-500">
+                Email address
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {userInfo.email}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
     <div className="max-w-lg mx-auto p-4 my-10 bg-[#bababa] rounded shadow-lg">
-      <h1 className="text-3xl font-bold mb-4 text-center">Settings</h1>
-
+      <h1 className="text-3xl font-bold mb-4 text-center">Account settings</h1>
       {/* Reset Password Box */}
       <div className="border rounded-md p-4 mb-4">
         <h2 className="text-lg font-medium mb-2">Reset Password</h2>
         <Form className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
             <input
               type="text"
               name="email"
@@ -73,7 +110,9 @@ function Settings() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Code</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Code
+            </label>
             <input
               type="text"
               name="code"
@@ -84,7 +123,9 @@ function Settings() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">New Password</label>
+            <label className="block text-sm font-medium text-gray-700">
+              New Password
+            </label>
             <input
               type="password"
               name="newPassword"
@@ -108,7 +149,9 @@ function Settings() {
         <h2 className="text-lg font-medium mb-2">Change Password</h2>
         <Form className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Old Password</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Old Password
+            </label>
             <input
               type="password"
               name="oldPassword"
@@ -119,7 +162,9 @@ function Settings() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">New Password</label>
+            <label className="block text-sm font-medium text-gray-700">
+              New Password
+            </label>
             <input
               type="password"
               name="newPassword"
@@ -143,7 +188,9 @@ function Settings() {
         <h2 className="text-lg font-medium mb-2">Update User</h2>
         <Form className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">First Name</label>
+            <label className="block text-sm font-medium text-gray-700">
+              First Name
+            </label>
             <input
               type="text"
               name="firstName"
@@ -154,7 +201,9 @@ function Settings() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Last Name</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Last Name
+            </label>
             <input
               type="text"
               name="lastName"
@@ -165,7 +214,9 @@ function Settings() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Phone</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Phone
+            </label>
             <input
               type="text"
               name="phone"
@@ -176,7 +227,9 @@ function Settings() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -207,6 +260,7 @@ function Settings() {
 
       {message && <p className="mt-4 text-green-600">{message}</p>}
     </div>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as couponRouter from './coupon.controller.js'
-import { auth } from "../../middleware/auth.js";
+import { auth, roles } from "../../middleware/auth.js";
 
 const router= Router()
 

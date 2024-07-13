@@ -4,13 +4,13 @@ const userSchema = new Schema(
     {
         firstName:{
             type:String,
-            lowercase:true,
-            required: true,
+            lowercase:false,
+            required: false,
         },
         lastName:{
             type : String,
-            lowercase:true,
-            required :true,
+            lowercase:false,
+            required :false,
         },
         /*name : {
             type:String,

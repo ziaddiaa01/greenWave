@@ -1,15 +1,17 @@
 import { useState } from "react";
 import FontAwesome from "react-fontawesome";
-import { useNavigation, Form, useActionData , Link} from "react-router-dom";
+import { useNavigation, Form, useActionData , Link, useLoaderData} from "react-router-dom";
 import { isLoggedIn } from "../utils";
 
 import {
   getAvailableGardeningAppointments,
   setGardeningAppointment,
+  getUserData,
 } from "../api";
 
-export function loader() {
-  return "dd";
+export async function loader() {
+  const user = await getUserData()
+  return user.user;
 }
 export async function action({ request }) {
   const formData = await request.formData();
@@ -18,7 +20,7 @@ export async function action({ request }) {
   const address = formData.get("address");
   const greeningType = formData.get("serviceType");
   const appointment = formData.get("appointment");
-
+  const userID = formData.get("ID")
   const reqObj = new Request(window.location.href);
   const pathname = new URL(reqObj.url).pathname;
   const response = isLoggedIn();
@@ -33,7 +35,6 @@ export async function action({ request }) {
 
       // Parse the appointment JSON string
       const appointmentObj = JSON.parse(appointment);
-      const userID = localStorage.getItem("userID");
       const response = await setGardeningAppointment({
         userId: userID,
         name,
@@ -44,7 +45,7 @@ export async function action({ request }) {
         time: appointmentObj.time,
       });
 
-      return JSON.stringify(response.message);
+      return response;
     } catch (err) {
       return err.message;
     }
@@ -52,6 +53,7 @@ export async function action({ request }) {
 }
 
 function Gardening() {
+  const userInfo = useLoaderData()
   const [selectedService, setSelectedService] = useState("");
   const [filteredAppointments, setFilteredAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState("");
@@ -718,6 +720,7 @@ function Gardening() {
             {errorMessage && <h3 className={`${errorMessageColor} font-bold text-center mt-1`}>{errorMessage.replace(/"/g, '')}</h3>}
 
             <div className="m-4">
+              <input type="hidden" value={userInfo._id} name="ID"></input>
               <label className="sr-only" htmlFor="name">
                 Name
               </label>

@@ -5,8 +5,6 @@ import defaultImageCourse from "../images/course-6686fb554515995779e96b6d.jpg";
 import defaultImageProduct from '../images/product-6689f8ae0221a8280371a5ab.jpg';
 import defaultImageBook from "../images/book-668703d94515995779e96b74.jpg";
 
-
-
 export async function loader() {
   const cart = await getUserShoppingCart();
   const cartItems = cart.cart;
@@ -19,7 +17,6 @@ export default function ShoppingCart() {
   const [quantities, setQuantities] = useState(
     initialCartItems.items.map((item) => item.quantity)
   );
-
 
   useEffect(() => {
     setQuantities(cartItems.items.map((item) => item.quantity));
@@ -39,35 +36,26 @@ export default function ShoppingCart() {
       } else if (newQuantity === 0) {
         // Removing item from cart
         response = await removeItemFromCart({ [`${itemType}Id`]: itemId });
-        // Remove item from cartItems state
-        const updatedCartItems = {
-          ...cartItems,
-          items: cartItems.items.filter((item, idx) => idx !== index),
-        };
-        setCartItems(updatedCartItems);
-        return; // Exit early to prevent updating quantities and subtotal
       }
-      // Handle successful response
-      if (
-        response.message === "Item added to cart" ||
-        response.message === "Item removed from cart"
-      ) {
-        const updatedCartItems = {
-          ...cartItems,
-          items: cartItems.items.map((item, idx) => ({
-            ...item,
-            quantity: idx === index ? newQuantity : item.quantity,
-          })),
-        };
-        setCartItems(updatedCartItems);
+
+      if (response.message === "ITEM ADDED TO CART" || response.message === "Item removed from cart") {
+        const updatedItems = cartItems.items.map((item, idx) => {
+          if (idx === index) {
+            return { ...item, quantity: newQuantity };
+          }
+          return item;
+        }).filter((item) => item.quantity > 0);
+
+        setCartItems({ ...cartItems, items: updatedItems });
+        setQuantities(updatedItems.map(item => item.quantity));
       } else {
         console.error("Unexpected response from API:", response);
       }
     } catch (error) {
       console.error("Error updating item quantity:", error);
-      // Handle error gracefully
     }
   };
+
   const getItemImageUrl = (item) => {
     if (item.productId) {
       const parts = defaultImageProduct.split("-");
@@ -82,15 +70,13 @@ export default function ShoppingCart() {
       parts[parts.length - 1] = `${item.courseId._id}.jpg`;
       return parts.join("-");
     } else {
-      // Default image if item type is unknown (though ideally should not happen)
-      return defaultImageProduct; // Adjust default image as needed
+      return defaultImageProduct;
     }
   };
 
   const subtotal = cartItems.items.reduce((acc, item, index) => {
     let itemPrice = 0;
-  
-    // Determine the price based on the item type
+
     if (item.productId) {
       itemPrice = item.productId.price || 0;
     } else if (item.bookId) {
@@ -98,11 +84,11 @@ export default function ShoppingCart() {
     } else if (item.courseId) {
       itemPrice = item.courseId.price || 0;
     }
-  
+
     const itemQuantity = quantities[index] || 0;
     return acc + (itemPrice * itemQuantity);
   }, 0);
-  
+
   const shipping = 5.0;
   const tax = subtotal * 0.1;
   const total = subtotal + tax + shipping;
@@ -127,14 +113,14 @@ export default function ShoppingCart() {
                   )}
                   {item.bookId && (
                     <img
-                    src={getItemImageUrl(item)}
+                      src={getItemImageUrl(item)}
                       alt={item.bookId.name}
                       className="flex-none w-24 h-24 rounded-lg border border-gray-200"
                     />
                   )}
                   {item.courseId && (
                     <img
-                    src={getItemImageUrl(item)}
+                      src={getItemImageUrl(item)}
                       alt={item.courseId.name}
                       className="flex-none w-24 h-24 rounded-lg border border-gray-200"
                     />

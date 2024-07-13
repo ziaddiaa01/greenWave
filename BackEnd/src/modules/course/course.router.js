@@ -10,9 +10,9 @@ import {
 
 const router = Router();
 
-router.post('/course', addCourse);
+router.post('/add', addCourse);
 router.put('/course/:courseId', updateCourse);
-router.delete('/course/:courseId', deleteCourse);
+router.delete('/delete/:courseId', deleteCourse);
 router.get('/course/search', searchCourse);
 router.get('/getById/:courseId', getCourseById);
 router.get('/allCourses', getAllCourses);

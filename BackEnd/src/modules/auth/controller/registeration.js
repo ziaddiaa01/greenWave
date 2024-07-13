@@ -5,7 +5,7 @@ import { compare, hash } from "../../../utils/HashAndCompare.js";
 import { nanoid } from "nanoid";
 import sendEmail, { createHtml } from "../../../utils/email.js";
 import CryptoJS from "crypto-js"
-import { generateToken } from "../../../utils/GenerateAndVerifyToken.js";
+import { generateToken  , verifyToken} from "../../../utils/GenerateAndVerifyToken.js";
 import { addToBlackList } from "../../../utils/tokenBlackList.js";
 
 
@@ -61,8 +61,30 @@ export const signin = async(req,res,next)=>{
         email:user.email
     }
     const userToken= generateToken({payload})
-    res.status(StatusCodes.ACCEPTED).json({message:"Valid Credentials", userID:user._id,userToken})
+    res.status(StatusCodes.ACCEPTED).json({message:"Valid Credentials", userToken})
 }
+
+export const getUserInfo = async (req, res, next) => {
+    const {authorization}=req.headers
+    if (!authorization) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Authorization header missing' });
+    }
+    const token = authorization.split(process.env.BEARER_KEY)[1];
+    if (!token) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Token missing' });
+    }
+    try {
+        const decodedToken = verifyToken({token});
+        const user = await userModel.findById(decodedToken.id).select('-password -__v'); // Exclude sensitive fields like password
+        if (!user) {
+            return next(new ErrorClass('User not found', StatusCodes.NOT_FOUND));
+        }
+        res.status(StatusCodes.OK).json({ message: 'User information retrieved successfully', user });
+    } catch (error) {
+        return next(new ErrorClass('Invalid token', StatusCodes.UNAUTHORIZED));
+    }
+};
+
 //4]==================== Forgrt Password =================
 // ===================== There is no expiration Date for the sent code ======
 export const sendCode = async(req,res,next)=>{
@@ -172,3 +194,27 @@ export const logout = async(req,res,next)=>{
     addToBlackList(token)
     res.status(StatusCodes.OK).json({ message: 'Logged out successfully' });
 }
+
+export const createDefaultAdmins = async()=>{
+    const defaultAdmins=[
+        { email: "admin1@example.com", password: "123456", role: "Admin"},
+        {email: "admin2@example.com", password: "abcdef", role: "Admin"},
+        {email: "admin3@example.com", password: "1z3y5x", role: "Admin"},
+    ];
+    try {
+        for (const admin of defaultAdmins) {
+          const existingAdmin = await userModel.findOne({ email: admin.email });
+    
+          if (!existingAdmin) {
+            const newAdmin = new userModel(admin);
+            await newAdmin.save();
+            console.log(`Admin ${admin.email} created successfully`);
+          } else {
+            console.log(`Admin ${admin.email} already exists`);
+          }
+        }
+      } catch (error) {
+        console.error("Error creating default admins:", error);
+      }
+}
+

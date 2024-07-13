@@ -20,6 +20,9 @@ router.patch('/change-pass',auth(),authController.changePass)
 
 router.patch('/soft-del',auth(),authController.softDelete)
 
+router.get('/getuser',auth(),authController.getUserInfo)
+
+
 router.post('/logout',auth(),authController.logout)
 
 export default router

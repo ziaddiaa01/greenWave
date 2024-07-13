@@ -8,31 +8,31 @@ const urbanGreeningSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: true
+        required: false
     },
     phone: {
         type: String,
-        required: true
+        required: false
     },
     address: {
         type: String,
-        required: true
+        required: false
     },
     greeningType: {
         type: String,
-        required: true
+        required: false
     },
     date: {
         type: Date,
-        required: true
+        required: false
     },
     time: {
         type: String,
-        required: true
+        required: false
     },
     email: {
         type: String,
-        required: true
+        required: false
     }
 }, {
     timestamps: true

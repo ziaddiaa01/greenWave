@@ -18,11 +18,8 @@ export async function action({ request }) {
     const pathname = new URL(request.url).searchParams.get("redirectTo") || "/";
     
     try {
-        const token = await loginUser({ email, password });
-        console.log(token.userID)
-        localStorage.setItem("accessToken", token.userToken);
-        localStorage.setItem("userID", token.userID);
-        
+        const response = await loginUser({ email, password });
+        localStorage.setItem("accessToken", response.userToken);
         window.dispatchEvent(new Event("loginStatusChange")); 
         return redirect(pathname);
     } catch(err) {

@@ -65,10 +65,22 @@ export async function confirmEmail({ email, code }) {
   return data;
 }
 
-export async function getUserData(userID) {
-  const userData = { points: 30 }; // if send return ok else not ok
+export async function getUserData() {
+  const token = localStorage.getItem("accessToken");
+  const BEARER_KEY = "Test_";
+  const response = await fetch("/api/auth/getuser", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization" : `${BEARER_KEY}${token}`
+    },
+  });
 
-  return userData;
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "User data fetch failed");
+  }
+  return data;
 }
 
 export async function sendFeedback({ name, email, subject, message }) {
@@ -80,39 +92,33 @@ export async function sendFeedback({ name, email, subject, message }) {
 }
 
 export async function setCollectionAppointment({
-  userId,
-  type,
-  weight,
+  wasteType,
+  amount,
   date,
   time,
   location,
 }) {
-  try {
+  const token = localStorage.getItem("accessToken");
+  const BEARER_KEY = "Test_";
     const response = await fetch("/api/waste-collection/schedule", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization" : `${BEARER_KEY}${token}`
       },
-      body: JSON.stringify({ userId, type, weight, date, time, location }),
+      body: JSON.stringify({ wasteType, amount, date, time, location }),
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Network response was not ok:", errorText);
-      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-    }
-
-    const data = await response.json();
-    console.log("Received response:", data);
-    return data;
-  } catch (error) {
-    console.error("Error handling response:", error);
-    throw new Error("Failed to handle response");
-  }
+    console.log(response)
+    return response ;
 }
 
+
+
+
+
 export async function setGardeningAppointment({userId, name, phone, address, greeningType, date, time}) {
-  try {
+  console.log(userId)
     const response = await fetch("/api/urban-greening/request", {
       method: "POST",
       headers: {
@@ -121,19 +127,8 @@ export async function setGardeningAppointment({userId, name, phone, address, gre
       body: JSON.stringify({ userId, name, phone, address, greeningType, date, time }),
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Network response was not ok:", errorText);
-      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-    }
-
-    const data = await response.json();
-    console.log("Received response:", data);
-    return data;
-  } catch (error) {
-    console.error("Error handling response:", error);
-    throw new Error("Failed to handle response");
-  }
+    console.log(response)
+    return response ;
 }
 
 
@@ -166,7 +161,7 @@ export async function createOrder(orderData) {
 
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || "Order creation failed");
+    throw new Error(data || "Order creation failed");
   }
   return data;
 }
@@ -412,6 +407,21 @@ export async function getCourse({id}) {
   return data;
 }
 
+export async function getOrderById({id}) {
+  const response = await fetch(`/api/order/getbyid/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "order fetch failed");
+  }
+  console.log(data)
+  return data;
+}
+
 
 export async function logout() {
   try {
@@ -559,3 +569,224 @@ export async function updateUser(userData) {
     throw error;
   }
 }
+export async function cancelOrder({ cancelingOrderId, cancelReason }) {
+  const token = localStorage.getItem("accessToken");
+  const BEARER_KEY = "Test_";
+  const response = await fetch(`/api/order/cancel/${cancelingOrderId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `${BEARER_KEY}${token}`,
+    },
+    body: JSON.stringify({cancelReason}), // Ensure cancelReason is not wrapped in extra quotes
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Order cancel failed");
+  }
+  return data;
+}
+
+export async function redeem() {
+  const token = localStorage.getItem("accessToken");
+  const BEARER_KEY = "Test_";
+  const response = await fetch(`/api/coupon/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `${BEARER_KEY}${token}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "redeem points failed");
+  }
+  return data;
+}
+
+export async function addProduct({ name, description, stock, price, discount, categoryId, brandId, image }) {
+  const token = localStorage.getItem("accessToken");
+  const BEARER_KEY = "Test_";
+
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("description", description);
+  formData.append("stock", stock);
+  formData.append("price", price);
+  formData.append("discount", discount);
+  formData.append("categoryId", categoryId);
+  formData.append("brandId", brandId);
+  formData.append("image", image); // Assuming "imageFile" is the actual file input
+  console.log("Image File:", image);
+  const response = await fetch("/api/product/add", {
+      method: "POST",
+      headers: {
+          "Authorization": `${BEARER_KEY}${token}`,
+      },
+      body: formData,
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+      throw new Error(data.message || "Product addition failed");
+  }
+  return data;
+}
+
+export async function addArticle({ title, content, author }) {
+  const response = await fetch("/api/article/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title, content, author }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Article addition failed");
+  }
+  return data;
+}
+
+export async function addBook({ name, author, price, stock, description }) {
+  const response = await fetch("/api/book/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, author, price, stock, description }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Book addition failed");
+  }
+  return data;
+}
+
+export async function addCourse({ name, instructor, price, description }) {
+  const response = await fetch("/api/course/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, instructor, price, description }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Course addition failed");
+  }
+  return data;
+}
+
+
+export async function addReview({productId , bookId , courseId , articleId, comment}) {
+  
+  const token = localStorage.getItem("accessToken");
+  const BEARER_KEY = "Test_";
+  const response = await fetch(`/api/review/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `${BEARER_KEY}${token}`,
+    },
+    body: JSON.stringify({ productId , bookId , courseId , articleId, comment }),
+  });
+  const data = await response.json();
+  console.log(data)
+  if (!response.ok) {
+    throw new Error(data.msgError || "add review  failed");
+  }
+  return data;
+}
+
+export async function deleteProduct({productId}) {
+  try {
+    
+    const response = await fetch(`/api/product/delete/${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Delete Product failed");
+    }
+
+    const data = await response.json();
+    return data; // Return any relevant response data
+  } catch (error) {
+    console.error("Error during delete product:", error.message);
+    throw error;
+  }
+}
+
+export async function deleteCourse({courseId}) {
+  try {
+
+    const response = await fetch(`/api/course/delete/${courseId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Delete course failed");
+    }
+
+    const data = await response.json();
+    return data; // Return any relevant response data
+  } catch (error) {
+    console.error("Error during delete course:", error.message);
+    throw error;
+  }
+}
+
+export async function deleteArticle({articleId}) {
+  try {
+
+    const response = await fetch(`/api/article/delete/${articleId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Delete article failed");
+    }
+
+    const data = await response.json();
+    return data; // Return any relevant response data
+  } catch (error) {
+    console.error("Error during delete article:", error.message);
+    throw error;
+  }
+}
+
+export async function deleteBook({bookId}) {
+  try {
+    console.log(bookId)
+    const response = await fetch(`/api/book/delete/${bookId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Delete book failed");
+    }
+
+    const data = await response.json();
+    return data; // Return any relevant response data
+  } catch (error) {
+    console.error("Error during book delete:", error.message);
+    throw error;
+  }
+}
+

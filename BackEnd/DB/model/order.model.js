@@ -8,20 +8,20 @@ const orderSchema = new Schema({
     },
     items:[{
         product:{
-            productId: { type: Types.ObjectId, ref: 'Product' },
-            name:{type: String, required:false},
-            price: { type: Number , required:false},
-            paymentPrice: { type: Number , required:false},
+            productId: { type: Types.ObjectId, ref: 'Product',required: false },
+            name:{type: String},
+            price: { type: Number},
+            paymentPrice: { type: Number},
             quantity:{
                 type:Number,
                 //required:true,
             },
         },
         book:{
-            bookId:{type: Types.ObjectId, ref:'Book'},
-            name: { type: String , required:false },
-            author: { type: String , required:false},
-            genre: { type: String , required:false},
+            bookId:{type: Types.ObjectId, ref:'Book',required: false},
+            name: { type: String},
+            author: { type: String },
+            genre: { type: String },
             price: {type: Number},
             quantity:{
                 type:Number,
@@ -29,8 +29,8 @@ const orderSchema = new Schema({
             },
         },
         course:{
-            courseId:{type: Types.ObjectId, ref:'Course'},
-            name: { type: String , required:false},
+            courseId:{type: Types.ObjectId, ref:'Course',required: false},
+            name: { type: String},
             price: { type: Number},
             quantity:{
                 type:Number,
@@ -49,8 +49,7 @@ const orderSchema = new Schema({
         type:String
     },
     coupon:{
-        type:Types.ObjectId,ref:'Coupon',
-        required:false
+        type:Types.ObjectId,ref:'Coupon'
     },
     price:{
         type:Number,
@@ -72,7 +71,6 @@ const orderSchema = new Schema({
     },
     reason:{
         type: String,
-        required:false
     }
 
 },{

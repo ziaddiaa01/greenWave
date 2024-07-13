@@ -22,8 +22,16 @@ import Checkout, { loader as checkoutLoader, action as  checkoutAction }from './
 import ConfirmEmail, {action as  confirmEmailAction }from './pages/ConfirmEmail'
 import ChatBot from './pages/ChatBot'
 import ThankYou from './pages/ThankYou'
-import Settings from './pages/Settings'
+import Settings , { loader as settingsLoader}  from './pages/Settings'
 import OrderHistory, {loader as  orderHistoryLoader }from './pages/OrderHistory'
+import OrderDetail , { loader as orderDetailLoader} from './pages/OrderDetail'
+import RedeemPoints , { loader as redeemPointsLoader} from './pages/RedeemPoints'
+import AdminDashboard , { action as adminDashboardAction} from './pages/AdminDashboard'
+import Products , { loader as productsLoader} from './pages/Products'
+import AllBooks , { loader as allBooksLoader} from './pages/AllBooks'
+import AllCourses , { loader as allCoursesLoader} from './pages/AllCourses'
+import AllArticles , { loader as allArticlesLoader} from './pages/AllArticles'
+import ReportSite from './pages/ReportSite'
 
 
 
@@ -149,11 +157,51 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route 
       path="settings" 
       element={<Settings />}
+      loader={settingsLoader}
     />
     <Route 
       path="orders" 
       element={<OrderHistory />}
       loader={orderHistoryLoader}
+    />
+    <Route 
+      path="orders/:id" 
+      element={<OrderDetail />} 
+      loader={orderDetailLoader}
+    />
+    <Route 
+      path="redeem" 
+      element={<RedeemPoints />} 
+      loader={redeemPointsLoader}
+    />
+    <Route 
+      path="dashboard" 
+      element={<AdminDashboard />}
+      action={adminDashboardAction}
+    />
+    <Route 
+      path="all-products" 
+      element={<Products />} 
+      loader={productsLoader}
+    />
+    <Route 
+      path="all-books" 
+      element={<AllBooks />} 
+      loader={allBooksLoader}
+    />
+    <Route 
+      path="all-courses" 
+      element={<AllCourses />} 
+      loader={allCoursesLoader}
+    />
+    <Route 
+      path="all-articles" 
+      element={<AllArticles />} 
+      loader={allArticlesLoader}
+    />
+    <Route 
+      path="report" 
+      element={<ReportSite />} 
     />
   </Route>
 ))

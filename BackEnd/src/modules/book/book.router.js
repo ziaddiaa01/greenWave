@@ -10,9 +10,9 @@ import {
 
 const router = Router();
 
-router.post('/book', addBook);
+router.post('/add', addBook);
 router.put('/book/:bookId', updateBook);
-router.delete('/book/:bookId', deleteBook);
+router.delete('/delete/:bookId', deleteBook);
 router.get('/book/search', searchBooks);
 router.get('/getById/:bookId', getBookById);
 router.get('/getall', getAllBooks);

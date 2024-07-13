@@ -1,12 +1,13 @@
 import Jwt from "jsonwebtoken"
 import userModel from "../../DB/model/user.model.js"
 import { StatusCodes } from "http-status-codes"
+import { isTokenBlackListed } from "../utils/tokenBlackList.js"
 export const roles={
     admin:'Admin',
     user:'User'
 }
 
-//Object.freeze(roles)
+Object.freeze(roles)
 export const auth = () => {
     return async (req,res,next)=>
         {
@@ -19,9 +20,12 @@ export const auth = () => {
                 return res.json({message:"In-valid bearer key"})
             }
             const token = authorization.split(process.env.BEARER_KEY)[1]
-            console.log(token);
+            //console.log(token);
+            if(isTokenBlackListed(token)){
+                return next (new ErrorClass('Token is BlackListed',StatusCodes.UNAUTHORIZED))
+            }
             if(!token){
-                return res,json({message:"In-valid Token"})
+                return next (new ErrorClass('Invalid Token',StatusCodes.UNAUTHORIZED))
             }
             const decoded = Jwt.verify(token,process.env.TOKEN_SIGNATURE)
             if(!decoded?.id){

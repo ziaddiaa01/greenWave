@@ -49,7 +49,7 @@ export const deleteArticle = async (req, res) => {
 export const searchArticles = async (req, res) => {
     try {
         const { query } = req.query;
-        const articles = await articleModel.find({ title: { $regex: query, $options: 'i' } });
+        const articles = await articleModel.find({ name: { $regex: query, $options: 'i' } });
         res.status(200).json(articles);
     } catch (error) {
         res.status(400).json({ message: error.message });

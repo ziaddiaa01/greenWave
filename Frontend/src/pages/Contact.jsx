@@ -1,17 +1,31 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
-import { sendFeedback } from "../api";
+import { getBooks, getArticles, getCourses, getProducts, addReview } from "../api";
+import { useEffect, useState } from "react";
 import FontAwesome from "react-fontawesome";
-import { useEffect , useState} from "react";
 
 export async function action({ request }) {
   const formData = await request.formData();
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const subject = formData.get("subject");
-  const message = formData.get("message");
+
+  const itemId = formData.get("itemId");
+  const comment = formData.get("comment");
+  const itemType = formData.get("itemType");
+  
   try {
-    const response = await sendFeedback({name, email, subject, message});
-    return { success: true, message: response }; // Return success response
+    let response;
+    if (itemType === "books") {
+      const bookId = itemId;
+      response = await addReview({ bookId, comment });
+    } else if (itemType === "articles") {
+      const articleId = itemId;
+      response = await addReview({ articleId, comment });
+    } else if (itemType === "courses") {
+      const courseId = itemId;
+      response = await addReview({ courseId, comment });
+    } else if (itemType === "products") {
+      const productId = itemId;
+      response = await addReview({ productId, comment });
+    }
+    return { success: true, message: response.message }; // Extract and return only the message
   } catch (err) {
     return { success: false, message: err.message }; // Return error message
   }
@@ -21,17 +35,44 @@ export default function Contact() {
   const actionData = useActionData();
   const navigation = useNavigation();
   const [showMessage, setShowMessage] = useState(false);
-
+  const [items, setItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [itemType, setItemType] = useState("articles");
 
   useEffect(() => {
     if (actionData) {
       setShowMessage(true);
       const timer = setTimeout(() => {
         setShowMessage(false);
-      }, 3000); 
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [actionData]);
+
+  useEffect(() => {
+    async function fetchData() {
+      let data;
+      switch (itemType) {
+        case "books":
+          data = await getBooks();
+          break;
+        case "articles":
+          data = await getArticles();
+          break;
+        case "courses":
+          data = await getCourses();
+          break;
+        case "products":
+          const response = await getProducts();
+          data = response.products;
+          break;
+        default:
+          data = [];
+      }
+      setItems(data);
+    }
+    fetchData();
+  }, [itemType]);
 
   let messageStyle = {};
   if (actionData && actionData.success) {
@@ -60,7 +101,7 @@ export default function Contact() {
         <p className="w-full text-left pr-10 text-xs text-gray-600 mb-3">
           We value your thoughts and insights! Your feedback helps us improve and serve you better. Don't hesitate to share your thoughts, suggestions, or any concerns with us. Together, we can make a difference and create a better experience for everyone. Your voice matters – let it be heard! Send us your feedback today.
         </p>
-        
+
         <Form method="post" className="w-full " replace>
           <div className="flex gap-2">
             <input
@@ -79,20 +120,40 @@ export default function Contact() {
             />
           </div>
 
-          <input
-            name="subject"
-            type="text"
-            placeholder="Subject"
-            required
+          <select
+            name="itemType"
+            value={itemType}
+            onChange={(e) => setItemType(e.target.value)}
             className="mb-4 p-2 border outline-customGreen border-gray-300 rounded-md w-full"
-          />
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            required
-            rows="4"
-            className="mb-1 p-2 border outline-customGreen border-gray-300 rounded-md w-full"
-          ></textarea>
+          >
+            <option value="" selected disabled>select type</option>
+            <option value="articles">Articles</option>
+            <option value="books">Books</option>
+            <option value="courses">Courses</option>
+            <option value="products">Products</option>
+          </select>
+
+          <ul className="mb-4">
+            {items.map((item) => (
+              <li key={item._id} onClick={() => setSelectedItem(item)} className={`cursor-pointer p-2 rounded-md ${selectedItem?._id === item._id ? 'bg-gray-400' : 'hover:bg-gray-200'}`}>
+                {item.title || item.name}
+              </li>
+            ))}
+          </ul>
+
+          {selectedItem && (
+            <>
+              <input type="hidden" name="itemId" value={selectedItem._id} />
+              <textarea
+                name="comment"
+                placeholder="Your Review"
+                required
+                rows="4"
+                className="mb-1 p-2 border outline-customGreen border-gray-300 rounded-md w-full"
+              ></textarea>
+            </>
+          )}
+
           <button
             disabled={navigation.state === "submitting"}
             className="bg-customGreen text-white font-bold px-4 py-2 text-sm rounded-full transition border duration-500 ease-in-out transform hover:bg-white hover:text-customGreen hover:border hover:customGreen"
@@ -102,13 +163,13 @@ export default function Contact() {
               : "Send Message"}
           </button>
         </Form>
+
         {showMessage && actionData && (
           <h3 className="mb-4 text-lg" style={messageStyle}>
-          {actionData && actionData.message}
+            {actionData.message} {/* Display only the message */}
           </h3>
         )}
       </div>
-      
     </div>
   );
 }

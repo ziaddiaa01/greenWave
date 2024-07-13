@@ -1,18 +1,15 @@
-import urbanGreeningModel from "../../../DB/model/urbanGreening.model.js";
-import userModel from "../../../DB/model/user.model.js";
+import urbanGreeningModel from "../../../DB/model/UrbanGreening.model.js";
 import sendEmail, { createHtml } from "../../utils/email.js";
+import userModel from "../../../DB/model/user.model.js"
 
 // 1]================== Request Urban Greening Assistance ========================
 export const requestUrbanGreening = async (req, res, next) => {
     try {
-        const { userId, name, phone, address, greeningType, date, time } = req.body;
+        const { userId, greeningType, date, time } = req.body;
         const user = await userModel.findById(userId);
-        
+
         const request = new urbanGreeningModel({
             userId,
-            name,
-            phone,
-            address,
             greeningType,
             date,
             time,
@@ -23,9 +20,9 @@ export const requestUrbanGreening = async (req, res, next) => {
         const html = createHtml(`Your request for ${greeningType} urban greening assistance has been scheduled on ${date} at ${time}.`);
         sendEmail({ to: user.email, subject: 'Urban Greening Assistance Request Confirmation', html });
 
-        res.status(200).send({ message: "Request submitted successfully and confirmation email sent"});
+        res.status(200).send('Request submitted successfully and confirmation email sent');
     } catch (error) {
-        res.status(400).send( { error: `Error submitting request: ${error.message}`});
+        res.status(400).send(`Error submitting request: ${error.message}`);
     }
 };
 

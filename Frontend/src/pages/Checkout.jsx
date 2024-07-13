@@ -22,7 +22,6 @@ export async function loader() {
 export async function action({ request }) {
   const formData = await request.formData();
 
-  try {
     const paymentType = formData.get("paymentType");
     const cart = await getUserShoppingCart();
     const cartItems = cart.cart;
@@ -33,22 +32,25 @@ export async function action({ request }) {
           return {
             product: {
               productId: item.productId._id,
+              quantity: item.quantity,
             },
-            quantity: item.quantity,
+            
           };
         } else if (item.bookId) {
           return {
             book: {
               bookId: item.bookId._id,
+              quantity:item.quantity,
             },
-            quantity: item.quantity,
+            
           };
         } else if (item.courseId) {
           return {
             course: {
               courseId: item.courseId._id,
+              quantity: item.quantity,
             },
-            quantity: item.quantity,
+            
           };
         }
         return null;
@@ -56,16 +58,16 @@ export async function action({ request }) {
       address: formData.get("address"),
       phone: formData.get("phoneNumber"),
       notes: formData.get("notes"),
+      coupon: formData.get("coupon"),
       paymentMethod: paymentType,
     };
-    console.log(paymentData)
     const response = await createOrder(paymentData);
-    console.log(response)
-    return "Order created successfully";
-  } catch (error) {
-    console.error("Payment submission error:", error.message);
-    return "Order creation successfully";
-  }
+    if(response.order){
+      return "order created successfully"
+    }
+    else{
+      return "order creation failed"
+    }
 }
 
 
@@ -145,12 +147,12 @@ const  CheckoutForm = () => {
 const Checkout = () => {
   const { cartItems } = useLoaderData();
   const errorMessage = useActionData();
-
   const [paymentType, setPaymentType] = useState("");
   const [deliveryInfo, setDeliveryInfo] = useState({
     address: "",
     phoneNumber: "",
     notes: "",
+    coupon:"",
   });
 
   const handlePaymentTypeSelect = (type) => {
@@ -183,7 +185,7 @@ const Checkout = () => {
     },
   };
   let errorMessageColor = "";
-  if (errorMessage && errorMessage.toLowerCase().includes("error")) {
+  if (errorMessage && errorMessage.toLowerCase().includes("failed")) {
     errorMessageColor = "text-red-500"; 
   } else if (errorMessage) {
     errorMessageColor = "text-green-500"; 
@@ -302,6 +304,18 @@ const Checkout = () => {
                   rows={3}
                 />
               </div>
+              <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Coupon
+                  </label>
+                  <input
+                    type="text"
+                    name="coupon"
+                    value={deliveryInfo.coupon}
+                    onChange={handleInputChange}
+                    className="mt-1 outline-none block w-full border-b-2 border-gray-300 rounded-none focus:border-[#2DA884] focus:ring focus:ring-[#2DA884] focus:ring-opacity-50"
+                  />
+                </div>
               <button
                 type="submit"
                 className="w-full bg-[#2DA884] text-white py-2 px-4 rounded-md text-sm font-medium mt-4"
@@ -352,6 +366,18 @@ const Checkout = () => {
                     onChange={handleInputChange}
                     className="mt-1 outline-none block w-full border-b-2 border-gray-300 rounded-none focus:border-[#2DA884] focus:ring focus:ring-[#2DA884] focus:ring-opacity-50"
                   ></textarea>
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Coupon
+                  </label>
+                  <input
+                    type="text"
+                    name="coupon"
+                    value={deliveryInfo.coupon}
+                    onChange={handleInputChange}
+                    className="mt-1 outline-none block w-full border-b-2 border-gray-300 rounded-none focus:border-[#2DA884] focus:ring focus:ring-[#2DA884] focus:ring-opacity-50"
+                  />
                 </div>
               </div>
               <Elements stripe={stripePromise} options={options}>

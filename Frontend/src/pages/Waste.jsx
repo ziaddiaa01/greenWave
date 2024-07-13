@@ -17,7 +17,7 @@ export function loader() {
 
 export async function action({ request }) {
   const formData = await request.formData();
-  const type = formData.get("type");
+  const wasteType = formData.get("type");
   const weight = formData.get("weight");
   const weightMetric = formData.get("weightMetric");
   const location = formData.get("location");
@@ -45,18 +45,16 @@ export async function action({ request }) {
 
       // Parse the appointment JSON string
       const appointmentObj = JSON.parse(appointment);
-      const userID = localStorage.getItem("userID");
 
       const response = await setCollectionAppointment({
-        userId: userID,
-        type,
-        weight: `${weight} ${weightMetric}`,
+        wasteType,
+        amount: `${weight} ${weightMetric}`,
         date: appointmentObj.day,
         time: appointmentObj.time,
         location,
       });
 
-      return JSON.stringify(response.message);
+      return response;
     } catch (err) {
       return err.message;
     }
