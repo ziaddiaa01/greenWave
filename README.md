@@ -1,4 +1,4 @@
-Problem Definition 
+Problem Definition :sun_with_face:
  
 • Urban living has brought about challenges related to waste management, 
 lack of agricultural knowledge, limited green spaces, and a need for 
@@ -11,7 +11,7 @@ The existing landscape lacks a unified platform that seamlessly integrates
 these diverse services, limiting the ability of individuals to adopt 
 sustainable and environmentally friendly practices in their daily lives. 
  
-Our Solution 
+Our Solution  :four_leaf_clover:
  
 • Green Wave  offers a unified platform for sustainable living, integrating 
 waste management, urban greening, eco-friendly products, and sustainable 
